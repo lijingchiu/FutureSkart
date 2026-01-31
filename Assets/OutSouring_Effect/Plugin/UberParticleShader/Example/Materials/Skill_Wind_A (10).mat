@@ -1,0 +1,363 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5430764230372223488
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Skill_Wind_A (10)
+  m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
+  m_ValidKeywords:
+  - _ACTIVEDISSOLVE_ENABLE
+  - _ACTIVEDISTORT_POLARCOORD
+  - _ACTIVESOFTPARTICLE_ENABLE
+  - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
+  - _DISTORTTEXWRAPMODE_LINEAR_REPEAT
+  - _EMISSIONTEXWRAPMODE_LINEAR_REPEAT
+  - _MAINTEXMODE_NORMAL
+  - _MAINTEXWRAPMODE_LINEAR_REPEAT
+  - _VERTEXOFFSETTEXWRAPMODE_LINEAR_REPEAT
+  m_InvalidKeywords:
+  - _ACTIVEALPHACLIP_DISABLE
+  - _ACTIVECOLORADJUSTMENT_DISABLE
+  - _ACTIVEDECALWORLDNORMALMASK_DISABLE
+  - _ACTIVEEMISSION_DISABLE
+  - _ACTIVEEXTERNALALPHA_DISABLE
+  - _ACTIVEEXTRAFEATURES_DISABLE
+  - _ACTIVEFRESNEL_DISABLE
+  - _ACTIVELIGHTSYSTEM_DISABLE
+  - _ACTIVENORMAL_DISABLE
+  - _ACTIVEPARALLAX_DISABLE
+  - _ACTIVERAMP_DISABLE
+  - _ACTIVERIMDISSOLVE_DISABLE
+  - _ACTIVESIDEFACECOLOR_DISABLE
+  - _ACTIVEVERTEXOFFSETMASK_DISABLE
+  - _ACTIVEVERTEXOFFSET_DISABLE
+  - _DECALRENDERMODE_NORMAL
+  - _DISSOLVETEXUVCHANNEL_UV1
+  - _DISTORTTEXUVAUTOOFFSET_ON
+  - _DISTORTTEXUVCHANNEL_UV1
+  - _EMISSIONTEXUVAUTOOFFSET_ON
+  - _EMISSIONTEXUVCHANNEL_UV1
+  - _FLIPFRESNELALPHARANGE_ON
+  - _FLIPINNERFACENORMAL_ON
+  - _GRABPASSTEXMODE_NORMAL
+  - _MAINTEXUVCHANNEL_UV1
+  - _NORMALTEXUVCHANNEL_UV1
+  - _NORMALTEXWRAPMODE_SELFSETTING
+  - _PARALLAXNOISESTEPTEXWRAPMODE_SELFSETTING
+  - _PARALLAXTEXUVCHANNEL_UV1
+  - _PARALLAXTEXWRAPMODE_SELFSETTING
+  - _PARTICLEMODE_NORMAL
+  - _RECEIVESHADOW_DISABLE
+  - _VERTEXOFFSETMASKWRAPMODE_SELFSETTING
+  - _VERTEXOFFSETTEXUVAUTOOFFSET_ON
+  - _VERTEXOFFSETTEXUVCHANNEL_UV1
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  disabledShaderPasses:
+  - SHADOWCASTER
+  - DepthOnly
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AnimationNormalOffsetTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveTex:
+        m_Texture: {fileID: 2800000, guid: e42cfa229fd384a4aa9a687b9dfdc2d8, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _DistortTex:
+        m_Texture: {fileID: 2800000, guid: d536e3f8ba4b653449fd326845b1b6e1, type: 3}
+        m_Scale: {x: 1, y: 2}
+        m_Offset: {x: 0, y: -1}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionTex:
+        m_Texture: {fileID: 2800000, guid: 0668f2da46a745149a6e6570d9a5842a, type: 3}
+        m_Scale: {x: 2, y: 1}
+        m_Offset: {x: -4, y: -1}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 4eb23783b2a561f4aa4aa5728b22df4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxNoiseStepTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RampTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _VertexOffsetMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _VertexOffsetTex:
+        m_Texture: {fileID: 2800000, guid: 0668f2da46a745149a6e6570d9a5842a, type: 3}
+        m_Scale: {x: 2, y: 1}
+        m_Offset: {x: -1, y: 1}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ActiveAlphaClip: 0
+    - _ActiveColorAdjustment: 0
+    - _ActiveDecalWorldNormalMask: 0
+    - _ActiveDissolve: 1
+    - _ActiveDistort: 2
+    - _ActiveEmission: 0
+    - _ActiveExternalAlpha: 0
+    - _ActiveExtraFeatures: 0
+    - _ActiveFresnel: 0
+    - _ActiveHardClipDissolve: 0
+    - _ActiveLightSystem: 0
+    - _ActiveNormal: 0
+    - _ActiveParallax: 0
+    - _ActiveRamp: 0
+    - _ActiveRimDissolve: 0
+    - _ActiveSideFaceColor: 0
+    - _ActiveSoftParticle: 1
+    - _ActiveVertexOffset: 0
+    - _ActiveVertexOffsetMask: 0
+    - _AdditionalBounceRange: 0.5
+    - _AdditionalLightIntensity: 1
+    - _AlphaClip: 0
+    - _AlphaClipRange: 0.5
+    - _AlphaClipRangeController: 0
+    - _AnimationPlayableSlider: 0
+    - _AnimationPlayableSliderController: 0
+    - _AnimationTexUVChannel: 0
+    - _AnimationVertexVectorMode: 0
+    - _AntiShineGlowVal: 0
+    - _AntiShineGlowValController: 0
+    - _Blend: 0
+    - _BumpScale: 1
+    - _ChangeSide: 0
+    - _ClampMainTexUV: 0
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _ColorAdjustmentLayerMask: 1
+    - _Comp: 0
+    - _ContrastVal: 1
+    - _ContrastValController: 0
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DecalRenderMode: 0
+    - _DestBlend: 10
+    - _DetailAlbedoMapScale: 1
+    - _DetailNormalMapScale: 1
+    - _DissolveChannel: 0
+    - _DissolveIntensity: -0.24
+    - _DissolveIntensityController: 1
+    - _DissolveTexUVAutoOffset: 0
+    - _DissolveTexUVChannel: 0
+    - _DissolveTexWrapMode: 1
+    - _DistortCenterUV: 0
+    - _DistortChannel: 0
+    - _DistortImpactTarget: 1
+    - _DistortIntensity: 0.25
+    - _DistortIntensityController: 0
+    - _DistortTexUVAutoOffset: 1
+    - _DistortTexUVChannel: 0
+    - _DistortTexWrapMode: 1
+    - _DstBlend: 0
+    - _EmissionColorMode: 0
+    - _EmissionIntensity: 1
+    - _EmissionIntensityController: 0
+    - _EmissionTexUVAutoOffset: 1
+    - _EmissionTexUVChannel: 0
+    - _EmissionTexWrapMode: 1
+    - _EnableHighPrecisionFlowMap: 0
+    - _EnhanceRampColor: 1
+    - _EnvironmentReflections: 1
+    - _ExternalAlphaPower: 1
+    - _ExternalAlphaPowerController: 0
+    - _ExternalAlphaRange: 1
+    - _ExternalAlphaRangeController: 4
+    - _Fail: 0
+    - _FinalAlphaIntensity: 1
+    - _FinalAlphaIntensityController: 0
+    - _FinalColorIntensity: 3
+    - _FinalColorIntensityController: 0
+    - _FlipFresnelAlphaRange: 1
+    - _FlipFresnelColorRange: 0
+    - _FlipInnerFaceNormal: 1
+    - _FresnelFunction: 2
+    - _FresnelPower: 0.5
+    - _FresnelPowerController: 0
+    - _FresnelRange: 0.2
+    - _FresnelRangeController: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
+    - _GlossyReflections: 0
+    - _GrabPassIntensity: 1
+    - _GrabPassIntensityController: 0
+    - _GrabPassTexMode: 0
+    - _HUEShiftVal: 0
+    - _HUEShiftValController: 0
+    - _HeightSampleSteps: 32
+    - _InverseAlphaVal: 0
+    - _LineAlphaMode: 3
+    - _MainLightBounceRange: 0.5
+    - _MainLightIntensity: 1
+    - _MainTexBIntensityController: 0
+    - _MainTexB_Intensity: 0
+    - _MainTexGIntensityController: 0
+    - _MainTexG_Intensity: 0
+    - _MainTexMode: 0
+    - _MainTexUVAutoOffset: 0
+    - _MainTexUVChannel: 0
+    - _MainTexWrapMode: 1
+    - _Metallic: 0
+    - _NormalBounceLightRange: 1
+    - _NormalIntensity: 0
+    - _NormalIntensityController: 0
+    - _NormalTexUVAutoOffset: 0
+    - _NormalTexUVChannel: 0
+    - _NormalTexWrapMode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.005
+    - _ParallaxImpactTarget: 1
+    - _ParallaxIntensity: 0
+    - _ParallaxIntensityController: 0
+    - _ParallaxNoiseIntensity: 1
+    - _ParallaxNoiseStepTexWrapMode: 0
+    - _ParallaxNoiseTexChannel: 0
+    - _ParallaxTexChannel: 0
+    - _ParallaxTexUVAutoOffset: 0
+    - _ParallaxTexUVChannel: 0
+    - _ParallaxTexWrapMode: 0
+    - _ParticleMode: 0
+    - _Pass: 0
+    - _QueueOffset: 0
+    - _ReClampAnimationVertexVector: 0
+    - _ReceiveShadow: 0
+    - _ReceiveShadows: 1
+    - _Ref: 0
+    - _RenderMode: 0
+    - _RimDissolveColorMode: 0
+    - _RimDissolveRange: 1
+    - _RimDissolveRangeController: 0
+    - _SaturationVal: 1
+    - _SaturationValController: 0
+    - _Smoothness: 0.5
+    - _SmoothnessTextureChannel: 0
+    - _SoftRange: 10
+    - _SourceBlend: 5
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _VertexOffsetCameraDistance: 0
+    - _VertexOffsetCameraDistanceController: 0
+    - _VertexOffsetIntensity: 0.2
+    - _VertexOffsetIntensityController: 0
+    - _VertexOffsetMaskIntensity: 1
+    - _VertexOffsetMaskIntensityController: 0
+    - _VertexOffsetMaskUVAutoOffset: 0
+    - _VertexOffsetMaskWrapMode: 0
+    - _VertexOffsetTexUVAutoOffset: 1
+    - _VertexOffsetTexUVChannel: 0
+    - _VertexOffsetTexWrapMode: 1
+    - _WorkflowMode: 1
+    - _ZFail: 0
+    - _ZTest: 2
+    - _ZWrite: 0
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DecalWorldNormalMaskAxis: {r: 0, g: 1, b: 0, a: 0}
+    - _DissolveTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
+    - _DistortTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
+    - _EmissionColor: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
+    - _EmissionTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
+    - _FlipBookSetting: {r: 1, g: 1, b: 1, a: 0}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainTexColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
+    - _NormalTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
+    - _ParallaxTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
+    - _RimDissolveColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SideColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _VertexOffsetMaskSampleChannels: {r: 1, g: 1, b: 1, a: 1}
+    - _VertexOffsetMaskUVTileController: {r: 0, g: 0, b: 0, a: 0}
+    - _VertexOffsetTexSampleChannels: {r: 1, g: 1, b: 1, a: 1}
+    - _VertexOffsetTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
