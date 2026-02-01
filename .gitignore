@@ -1,4 +1,4 @@
-﻿.idea
+.idea
 Library
 Logs
 obj
@@ -6,3 +6,4 @@ Temp
 UserSettings
 FutureSkart_Gitlab.sln
 *.csproj
+FutureSkart.sln
