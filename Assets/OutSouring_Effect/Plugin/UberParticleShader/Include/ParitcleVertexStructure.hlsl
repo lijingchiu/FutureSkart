@@ -123,8 +123,17 @@ void VertexOffset(inout VertexInput v, inout VertexOutput o, in half4x2 customDa
                 float2 VertexOffsetUV = GetCustomUV(UVChannel[VERTEXOFFSETTEX_UVCHANNEL], _VertexOffsetTexUVAutoOffset, _VertexOffsetTex_ST, _VertexOffsetTexUVTileController, customData);
                 half4 VertexOffsetTexColor = SAMPLE_TEXTURE2D_LOD(_VertexOffsetTex , VERTEXOFFSETTEX_WRPAMODE , VertexOffsetUV , 0);
                 SetTextureChannels(VertexOffsetTexColor , _VertexOffsetTexSampleChannels);
-                half3 VertexOffsetTexValue = VertexOffsetTexColor.rgb * GetCustomIntensity(_VertexOffsetIntensity , _VertexOffsetIntensityController , customData) * v.normal.xyz;
-
+                half3 VertexOffsetTexValue = half3(0, 0, 0);
+                #ifdef _VERTEXOFFSETDIRECTION_NORMAL
+                        VertexOffsetTexValue = VertexOffsetTexColor.rgb * GetCustomIntensity(_VertexOffsetIntensity , _VertexOffsetIntensityController , customData) * v.normal.xyz;
+                #elif  _VERTEXOFFSETDIRECTION_TANGENT
+                        float CalU = (v.uv.x - 0.5) * 2;
+                        VertexOffsetTexValue = VertexOffsetTexColor.rgb * GetCustomIntensity(_VertexOffsetIntensity , _VertexOffsetIntensityController , customData) * v.tangent.xyz * CalU;
+                #elif  _VERTEXOFFSETDIRECTION_BINORMAL
+                        half3 Binormal = cross(v.normal, v.tangent.xyz) * v.tangent.w;
+                        float CalV = (v.uv.y - 0.5) * 2;
+                        VertexOffsetTexValue = VertexOffsetTexColor.rgb * GetCustomIntensity(_VertexOffsetIntensity , _VertexOffsetIntensityController , customData) * Binormal.xyz * CalV;
+                #endif
             #ifdef USE_VERTEXOFFSET_MASK
                     float2 VertexOffsetMaskUV = GetCustomUV(UVChannel[VERTEXOFFSETTEX_UVCHANNEL] , _VertexOffsetMaskUVAutoOffset , _VertexOffsetMask_ST , _VertexOffsetMaskUVTileController , customData);
                     half4 VertexOffsetMaskColor = SAMPLE_TEXTURE2D_LOD(_VertexOffsetMask , VERTEXOFFSETMASK_WRPAMODE , VertexOffsetMaskUV , 0);

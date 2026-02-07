@@ -1314,6 +1314,7 @@ namespace UberParticleShader.Editor
             public readonly MaterialProperty VertexOffsetTexUVAutoOffset;
             public readonly MaterialProperty VertexOffsetTexUVTileController;
             public readonly MaterialProperty VertexOffsetTexSampleChannels;
+            public readonly MaterialProperty VertexOffsetDirection;
             public readonly MaterialProperty VertexOffsetIntensity;
 
             public readonly MaterialProperty VertexOffsetIntensityController;
@@ -1542,6 +1543,7 @@ namespace UberParticleShader.Editor
                 VertexOffsetTexUVAutoOffset = FindProperty("_VertexOffsetTexUVAutoOffset", properties);
                 VertexOffsetTexUVTileController = FindProperty("_VertexOffsetTexUVTileController", properties);
                 VertexOffsetTexSampleChannels = FindProperty("_VertexOffsetTexSampleChannels", properties);
+                VertexOffsetDirection = FindProperty("_VertexOffsetDirection", properties);
                 VertexOffsetIntensity = FindProperty("_VertexOffsetIntensity", properties);
                 VertexOffsetIntensityController = FindProperty("_VertexOffsetIntensityController", properties);
                 // Vertex-Offset (Mask)

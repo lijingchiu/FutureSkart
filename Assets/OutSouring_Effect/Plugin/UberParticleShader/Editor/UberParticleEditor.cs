@@ -668,6 +668,7 @@ namespace UberParticleShader.Editor
                     TileOffsetControllerShaderPropertyGUI(particleProperties.VertexOffsetTexUVTileController,
                         particleProperties.VertexOffsetTexUVAutoOffset, "Tile Offset Controller", ref VertexOffsetTexTileOffsetController,
                         nameof(VertexOffsetTexTileOffsetController), true);
+                    editor.ShaderProperty(particleProperties.VertexOffsetDirection, "Direction", 1);
                     MultiChannelsShaderPropertyGUI(particleProperties.VertexOffsetTexSampleChannels, "Sample Channels", 1);
                     SliderControllerShaderPropertyGUI(particleProperties.VertexOffsetIntensity, particleProperties.VertexOffsetIntensityController,
                         "Intensity", 1);
@@ -1284,7 +1285,9 @@ namespace UberParticleShader.Editor
         {
             vertexStreams_Tangent = (ActiveMode)particleProperties.ActiveNormal.floatValue == ActiveMode.Enable ||
                                     (ParallaxMode)particleProperties.ActiveParallax.floatValue == ParallaxMode.Enable ||
-                                    (ParallaxMode)particleProperties.ActiveParallax.floatValue == ParallaxMode.Steep;
+                                    (ParallaxMode)particleProperties.ActiveParallax.floatValue == ParallaxMode.Steep ||
+                                    (VertexOffsetMode)particleProperties.ActiveVertexOffset.floatValue ==
+                                    VertexOffsetMode.Enable;
         }
 
         private void CheckVertexStreams_UV2()

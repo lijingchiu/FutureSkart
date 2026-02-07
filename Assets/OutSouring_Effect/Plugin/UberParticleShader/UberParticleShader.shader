@@ -125,6 +125,7 @@ Shader "UberParticleShader"
         [Toggle] _VertexOffsetTexUVAutoOffset ("Vertex OffsetTex UV Auto Offset" , Float) = 0
         _VertexOffsetTexUVTileController ("Vertex OffsetTex UV Tile Controller" , Vector) = (0,0,0,0)
         _VertexOffsetTexSampleChannels ("Vertex OffsetTex Sample Channels" , Vector) = (1,1,1,1)
+        [KeywordEnum(Normal,Tangent,Binormal)] _VertexOffsetDirection("Vertex Offset Direction", Float) = 0
         _VertexOffsetIntensity ("Vertex Offset Intensity" , Range(-1,1)) = 0
         [IntRange] _VertexOffsetIntensityController ("Vertex Offset Intensity Controller" , Range(0,8)) = 0
         // Vertex-Offset (Vertex Offset Mask) 
@@ -334,6 +335,7 @@ Shader "UberParticleShader"
             // Enable Vertex-Offset
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSET_ENABLE _ACTIVEVERTEXOFFSET_ANIMATIONTEX _ACTIVEVERTEXOFFSET_FULLSCREEN _ACTIVEVERTEXOFFSET_LOCALBILLBOARD _ACTIVEVERTEXOFFSET_CAMERAZAXISOFFSET
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSETMASK_ENABLE
+            #pragma shader_feature_local _VERTEXOFFSETDIRECTION_NORMAL _VERTEXOFFSETDIRECTION_TANGENT _VERTEXOFFSETDIRECTION_BINORMAL
 
             // Enable Double Side Color
             #pragma shader_feature_local _ _ACTIVESIDEFACECOLOR_REPLACE _ACTIVESIDEFACECOLOR_ADD _ACTIVESIDEFACECOLOR_MULTIPLY
@@ -441,6 +443,7 @@ Shader "UberParticleShader"
             // Enable Vertex-Offset
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSET_ENABLE _ACTIVEVERTEXOFFSET_ANIMATIONTEX _ACTIVEVERTEXOFFSET_FULLSCREEN _ACTIVEVERTEXOFFSET_LOCALBILLBOARD _ACTIVEVERTEXOFFSET_CAMERAZAXISOFFSET
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSETMASK_ENABLE
+            #pragma shader_feature_local _VERTEXOFFSETDIRECTION_NORMAL _VERTEXOFFSETDIRECTION_TANGENT _VERTEXOFFSETDIRECTION_BINORMAL
             
             // Enable External Alpha Mode
             #pragma shader_feature_local _ _ACTIVEEXTERNALALPHA_LINE _ACTIVEEXTERNALALPHA_GRADIENT _ACTIVEEXTERNALALPHA_CIRCLE _ACTIVEEXTERNALALPHA_ROUND
@@ -521,6 +524,7 @@ Shader "UberParticleShader"
             // Enable Vertex-Offset
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSET_ENABLE _ACTIVEVERTEXOFFSET_ANIMATIONTEX _ACTIVEVERTEXOFFSET_FULLSCREEN _ACTIVEVERTEXOFFSET_LOCALBILLBOARD _ACTIVEVERTEXOFFSET_CAMERAZAXISOFFSET
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSETMASK_ENABLE
+            #pragma shader_feature_local _VERTEXOFFSETDIRECTION_NORMAL _VERTEXOFFSETDIRECTION_TANGENT _VERTEXOFFSETDIRECTION_BINORMAL
             
             // Enable External Alpha Mode
             #pragma shader_feature_local _ _ACTIVEEXTERNALALPHA_LINE _ACTIVEEXTERNALALPHA_GRADIENT _ACTIVEEXTERNALALPHA_CIRCLE _ACTIVEEXTERNALALPHA_ROUND
@@ -607,6 +611,7 @@ Shader "UberParticleShader"
             // Enable Vertex-Offset
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSET_ENABLE _ACTIVEVERTEXOFFSET_ANIMATIONTEX _ACTIVEVERTEXOFFSET_FULLSCREEN _ACTIVEVERTEXOFFSET_LOCALBILLBOARD _ACTIVEVERTEXOFFSET_CAMERAZAXISOFFSET
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSETMASK_ENABLE
+            #pragma shader_feature_local _VERTEXOFFSETDIRECTION_NORMAL _VERTEXOFFSETDIRECTION_TANGENT _VERTEXOFFSETDIRECTION_BINORMAL
             
             // Enable External Alpha Mode
             #pragma shader_feature_local _ _ACTIVEEXTERNALALPHA_LINE _ACTIVEEXTERNALALPHA_GRADIENT _ACTIVEEXTERNALALPHA_CIRCLE _ACTIVEEXTERNALALPHA_ROUND
@@ -648,6 +653,7 @@ Shader "UberParticleShader"
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSET_ENABLE _ACTIVEVERTEXOFFSET_ANIMATIONTEX _ACTIVEVERTEXOFFSET_FULLSCREEN _ACTIVEVERTEXOFFSET_LOCALBILLBOARD _ACTIVEVERTEXOFFSET_CAMERAZAXISOFFSET
             #pragma shader_feature_local _ _VERTEXOFFSETTEXUVCHANNEL_UV2 
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSETMASK_ENABLE
+            #pragma shader_feature_local _VERTEXOFFSETDIRECTION_NORMAL _VERTEXOFFSETDIRECTION_TANGENT _VERTEXOFFSETDIRECTION_BINORMAL
             
             ENDHLSL
         }
@@ -683,6 +689,7 @@ Shader "UberParticleShader"
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSET_ENABLE _ACTIVEVERTEXOFFSET_ANIMATIONTEX _ACTIVEVERTEXOFFSET_FULLSCREEN _ACTIVEVERTEXOFFSET_LOCALBILLBOARD _ACTIVEVERTEXOFFSET_CAMERAZAXISOFFSET
             #pragma shader_feature_local _ _VERTEXOFFSETTEXUVCHANNEL_UV2
             #pragma shader_feature_local _ _ACTIVEVERTEXOFFSETMASK_ENABLE
+            #pragma shader_feature_local _VERTEXOFFSETDIRECTION_NORMAL _VERTEXOFFSETDIRECTION_TANGENT _VERTEXOFFSETDIRECTION_BINORMAL
             
             ENDHLSL
         }

@@ -29,7 +29,14 @@
 
     // Vertex-Offset
     #ifdef _ACTIVEVERTEXOFFSET_ENABLE
+        #ifdef _VERTEXOFFSETDIRECTION_NORMAL
                 #define USE_NORMAL
+        #elif _VERTEXOFFSETDIRECTION_TANGENT
+                #define USE_TANGENT
+        #elif _VERTEXOFFSETDIRECTION_BINORMAL
+                #define USE_NORMAL
+                #define USE_TANGENT
+    #endif
                 #define USE_VERTEXOFFSET
     #elif _ACTIVEVERTEXOFFSET_ANIMATIONTEX
                 #define USE_NORMAL
