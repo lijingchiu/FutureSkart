@@ -7,21 +7,23 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Chip_HellishBlaze_FirePath_Fire (1)
+  m_Name: M_Chip_FireTornado_Main_Tornado_Base
   m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ACTIVEALPHACLIP_SMOOTHCLIP
-  - _ACTIVECOLORADJUSTMENT_ENABLE
   - _ACTIVEDISSOLVE_ENABLE
   - _ACTIVEDISTORT_ENABLE
-  - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
-  - _DISTORTTEXWRAPMODE_LINEAR_REPEAT
-  - _MAINTEXMODE_FLIPBOOK
-  - _MAINTEXWRAPMODE_LINEAR_CLAMP
-  - _VERTEXOFFSETDIRECTION_NORMAL
+  - _ACTIVERAMP_ENABLE
+  - _ACTIVEVERTEXOFFSET_ENABLE
+  - _DISSOLVETEXWRAPMODE_LINEAR_CLAMP
+  - _MAINTEXMODE_NORMAL
+  - _MAINTEXWRAPMODE_LINEAR_REPEAT
+  - _VERTEXOFFSETDIRECTION_TANGENT
+  - _VERTEXOFFSETTEXWRAPMODE_LINEAR_REPEAT
   m_InvalidKeywords:
+  - _ACTIVEALPHACLIP_DISABLE
+  - _ACTIVECOLORADJUSTMENT_DISABLE
   - _ACTIVEDECALWORLDNORMALMASK_DISABLE
   - _ACTIVEEMISSION_DISABLE
   - _ACTIVEEXTERNALALPHA_DISABLE
@@ -30,19 +32,18 @@ Material:
   - _ACTIVELIGHTSYSTEM_DISABLE
   - _ACTIVENORMAL_DISABLE
   - _ACTIVEPARALLAX_DISABLE
-  - _ACTIVERAMP_DISABLE
   - _ACTIVERIMDISSOLVE_DISABLE
   - _ACTIVESIDEFACECOLOR_DISABLE
   - _ACTIVESOFTPARTICLE_DISABLE
   - _ACTIVEVERTEXOFFSETMASK_DISABLE
-  - _ACTIVEVERTEXOFFSET_DISABLE
   - _DECALRENDERMODE_NORMAL
-  - _DISSOLVETEXUVAUTOOFFSET_ON
   - _DISSOLVETEXUVCHANNEL_UV1
   - _DISTORTTEXUVCHANNEL_UV1
+  - _DISTORTTEXWRAPMODE_SELFSETTING
   - _EMISSIONTEXUVCHANNEL_UV1
   - _EMISSIONTEXWRAPMODE_SELFSETTING
   - _GRABPASSTEXMODE_NORMAL
+  - _MAINTEXUVAUTOOFFSET_ON
   - _MAINTEXUVCHANNEL_UV1
   - _NORMALTEXUVCHANNEL_UV1
   - _NORMALTEXWRAPMODE_SELFSETTING
@@ -52,8 +53,8 @@ Material:
   - _PARTICLEMODE_NORMAL
   - _RECEIVESHADOW_DISABLE
   - _VERTEXOFFSETMASKWRAPMODE_SELFSETTING
+  - _VERTEXOFFSETTEXUVAUTOOFFSET_ON
   - _VERTEXOFFSETTEXUVCHANNEL_UV1
-  - _VERTEXOFFSETTEXWRAPMODE_SELFSETTING
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -71,21 +72,21 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DissolveTex:
-        m_Texture: {fileID: 2800000, guid: 46f6fff25cdd04a43833c3944ffedf2e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: -0.5, y: 0}
+        m_Texture: {fileID: 2800000, guid: 0f61df72d68c98145934530be64ac7b3, type: 3}
+        m_Scale: {x: 1, y: 2}
+        m_Offset: {x: 0, y: 0.29}
     - _DistortTex:
-        m_Texture: {fileID: 2800000, guid: ffaa78c2ccd35374fa1c1338cb4e51f2, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: -0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
     - _EmissionTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0638dcc9d4758401c825d9f1f0445595, type: 3}
+        m_Texture: {fileID: 2800000, guid: b293c832dd5919445a93758db66ee72d, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 0.2, y: -1.5}
     - _NormalTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -99,7 +100,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RampTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 65fa64373d5d7534c8c422595e5fcea4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _VertexOffsetMask:
@@ -107,13 +108,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _VertexOffsetTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 90b3335b54fea894fb919a1ff4102261, type: 3}
+        m_Scale: {x: 1, y: 7.3}
+        m_Offset: {x: 0.3, y: 0.52}
     m_Ints: []
     m_Floats:
-    - _ActiveAlphaClip: 2
-    - _ActiveColorAdjustment: 1
+    - _ActiveAlphaClip: 0
+    - _ActiveColorAdjustment: 0
     - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 1
     - _ActiveDistort: 1
@@ -125,15 +126,15 @@ Material:
     - _ActiveLightSystem: 0
     - _ActiveNormal: 0
     - _ActiveParallax: 0
-    - _ActiveRamp: 0
+    - _ActiveRamp: 1
     - _ActiveRimDissolve: 0
     - _ActiveSideFaceColor: 0
     - _ActiveSoftParticle: 0
-    - _ActiveVertexOffset: 0
+    - _ActiveVertexOffset: 1
     - _ActiveVertexOffsetMask: 0
     - _AdditionalBounceRange: 0.5
     - _AdditionalLightIntensity: 1
-    - _AlphaClipRange: 0.7
+    - _AlphaClipRange: 0.5
     - _AlphaClipRangeController: 0
     - _AnimationPlayableSlider: 0
     - _AnimationPlayableSliderController: 0
@@ -143,28 +144,28 @@ Material:
     - _AntiShineGlowValController: 0
     - _ChangeSide: 0
     - _ClampMainTexUV: 0
-    - _ColorAdjustmentLayerMask: 2
+    - _ColorAdjustmentLayerMask: 1
     - _Comp: 0
     - _ContrastVal: 1
     - _ContrastValController: 0
     - _Cull: 0
     - _DecalRenderMode: 0
     - _DestBlend: 10
-    - _DissolveCalculateMode: 1
+    - _DissolveCalculateMode: 0
     - _DissolveChannel: 0
-    - _DissolveIntensity: 0.5
-    - _DissolveIntensityController: 2
-    - _DissolveTexUVAutoOffset: 1
+    - _DissolveIntensity: 0
+    - _DissolveIntensityController: 0
+    - _DissolveTexUVAutoOffset: 0
     - _DissolveTexUVChannel: 0
-    - _DissolveTexWrapMode: 1
+    - _DissolveTexWrapMode: 2
     - _DistortCenterUV: 0
     - _DistortChannel: 0
-    - _DistortImpactTarget: 3
-    - _DistortIntensity: 0.12
+    - _DistortImpactTarget: 1
+    - _DistortIntensity: 0
     - _DistortIntensityController: 0
-    - _DistortTexUVAutoOffset: 1
+    - _DistortTexUVAutoOffset: 0
     - _DistortTexUVChannel: 0
-    - _DistortTexWrapMode: 1
+    - _DistortTexWrapMode: 0
     - _EmissionColorMode: 0
     - _EmissionIntensity: 1
     - _EmissionIntensityController: 0
@@ -172,17 +173,17 @@ Material:
     - _EmissionTexUVChannel: 0
     - _EmissionTexWrapMode: 0
     - _EnableHighPrecisionFlowMap: 0
-    - _EnhanceRampColor: 1
-    - _ExternalAlphaIntensity: 1
+    - _EnhanceRampColor: 1.72
+    - _ExternalAlphaIntensity: 3.22
     - _ExternalAlphaIntensityController: 0
-    - _ExternalAlphaPower: 1
+    - _ExternalAlphaPower: 100
     - _ExternalAlphaPowerController: 0
-    - _ExternalAlphaRange: 0
+    - _ExternalAlphaRange: 0.4
     - _ExternalAlphaRangeController: 0
     - _Fail: 0
     - _FinalAlphaIntensity: 1
     - _FinalAlphaIntensityController: 0
-    - _FinalColorIntensity: 10
+    - _FinalColorIntensity: 5
     - _FinalColorIntensityController: 0
     - _FlipFresnelAlphaRange: 0
     - _FlipFresnelColorRange: 0
@@ -199,17 +200,17 @@ Material:
     - _HUEShiftValController: 0
     - _HeightSampleSteps: 32
     - _InverseAlphaVal: 0
-    - _LineAlphaMode: 2
+    - _LineAlphaMode: 3
     - _MainLightBounceRange: 0.5
     - _MainLightIntensity: 1
     - _MainTexBIntensityController: 0
     - _MainTexB_Intensity: 0
     - _MainTexGIntensityController: 0
     - _MainTexG_Intensity: 0
-    - _MainTexMode: 2
-    - _MainTexUVAutoOffset: 0
+    - _MainTexMode: 0
+    - _MainTexUVAutoOffset: 1
     - _MainTexUVChannel: 0
-    - _MainTexWrapMode: 2
+    - _MainTexWrapMode: 1
     - _NormalBounceLightRange: 1
     - _NormalIntensity: 0
     - _NormalIntensityController: 0
@@ -236,22 +237,22 @@ Material:
     - _RimDissolveColorMode: 0
     - _RimDissolveRange: 1
     - _RimDissolveRangeController: 0
-    - _SaturationVal: 0.85
+    - _SaturationVal: 1
     - _SaturationValController: 0
     - _SoftRange: 1
     - _SourceBlend: 5
     - _VertexOffsetCameraDistance: 0
     - _VertexOffsetCameraDistanceController: 0
-    - _VertexOffsetDirection: 0
-    - _VertexOffsetIntensity: 0
-    - _VertexOffsetIntensityController: 0
+    - _VertexOffsetDirection: 1
+    - _VertexOffsetIntensity: 1
+    - _VertexOffsetIntensityController: 1
     - _VertexOffsetMaskIntensity: 1
     - _VertexOffsetMaskIntensityController: 0
     - _VertexOffsetMaskUVAutoOffset: 0
     - _VertexOffsetMaskWrapMode: 0
-    - _VertexOffsetTexUVAutoOffset: 0
+    - _VertexOffsetTexUVAutoOffset: 1
     - _VertexOffsetTexUVChannel: 0
-    - _VertexOffsetTexWrapMode: 0
+    - _VertexOffsetTexWrapMode: 1
     - _ZFail: 0
     - _ZTest: 2
     - _ZWrite: 0
@@ -261,7 +262,7 @@ Material:
     - _DistortTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
-    - _FlipBookSetting: {r: 4, g: 4, b: 0, a: 1}
+    - _FlipBookSetting: {r: 1, g: 1, b: 1, a: 0}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainTexUVTileController: {r: 0, g: 0, b: 0, a: 0}

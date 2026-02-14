@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7e1a558aa8b11467db1c0567df38da12
+guid: b293c832dd5919445a93758db66ee72d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -135,6 +135,6 @@ TextureImporter:
     nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  userData: gradient:220000,0.02058442,931709,0.1147021,FF2B08,0.2588235,FDA720,0.5794156,FFC366,0.9411765;1,0,1,1;Blend
+  userData: 
   assetBundleName: 
   assetBundleVariant: 

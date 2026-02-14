@@ -12,6 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ACTIVECOLORADJUSTMENT_ENABLE
   - _ACTIVEDISSOLVE_ENABLE
   - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
   - _MAINTEXMODE_FLIPBOOK
@@ -19,7 +20,6 @@ Material:
   - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
-  - _ACTIVECOLORADJUSTMENT_DISABLE
   - _ACTIVEDECALWORLDNORMALMASK_DISABLE
   - _ACTIVEDISTORT_DISABLE
   - _ACTIVEEMISSION_DISABLE
@@ -112,7 +112,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _ActiveAlphaClip: 0
-    - _ActiveColorAdjustment: 0
+    - _ActiveColorAdjustment: 1
     - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 1
     - _ActiveDistort: 0
@@ -142,9 +142,9 @@ Material:
     - _AntiShineGlowValController: 0
     - _ChangeSide: 0
     - _ClampMainTexUV: 0
-    - _ColorAdjustmentLayerMask: 2
+    - _ColorAdjustmentLayerMask: 4
     - _Comp: 0
-    - _ContrastVal: 1
+    - _ContrastVal: 0.9
     - _ContrastValController: 0
     - _Cull: 0
     - _DecalRenderMode: 0

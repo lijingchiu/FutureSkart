@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Chip_HellishBlaze_FirePath_Fire (1)
+  m_Name: M_Chip_Hellfire_GroundFire_Fire (1)
   m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -133,7 +133,7 @@ Material:
     - _ActiveVertexOffsetMask: 0
     - _AdditionalBounceRange: 0.5
     - _AdditionalLightIntensity: 1
-    - _AlphaClipRange: 0.7
+    - _AlphaClipRange: 0.128
     - _AlphaClipRangeController: 0
     - _AnimationPlayableSlider: 0
     - _AnimationPlayableSliderController: 0
@@ -236,7 +236,7 @@ Material:
     - _RimDissolveColorMode: 0
     - _RimDissolveRange: 1
     - _RimDissolveRangeController: 0
-    - _SaturationVal: 0.85
+    - _SaturationVal: 0.7
     - _SaturationValController: 0
     - _SoftRange: 1
     - _SourceBlend: 5

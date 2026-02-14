@@ -7,24 +7,24 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Chip_HellishBlaze_FirePath_Fire (1)
+  m_Name: M_Chip_Hellfire_GroundFire_Fire
   m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ACTIVEALPHACLIP_SMOOTHCLIP
   - _ACTIVECOLORADJUSTMENT_ENABLE
   - _ACTIVEDISSOLVE_ENABLE
   - _ACTIVEDISTORT_ENABLE
+  - _ACTIVEEXTERNALALPHA_ROUND
   - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
   - _DISTORTTEXWRAPMODE_LINEAR_REPEAT
   - _MAINTEXMODE_FLIPBOOK
   - _MAINTEXWRAPMODE_LINEAR_CLAMP
   - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
+  - _ACTIVEALPHACLIP_DISABLE
   - _ACTIVEDECALWORLDNORMALMASK_DISABLE
   - _ACTIVEEMISSION_DISABLE
-  - _ACTIVEEXTERNALALPHA_DISABLE
   - _ACTIVEEXTRAFEATURES_DISABLE
   - _ACTIVEFRESNEL_DISABLE
   - _ACTIVELIGHTSYSTEM_DISABLE
@@ -73,7 +73,7 @@ Material:
     - _DissolveTex:
         m_Texture: {fileID: 2800000, guid: 46f6fff25cdd04a43833c3944ffedf2e, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: -0.5, y: 0}
+        m_Offset: {x: -1, y: 0}
     - _DistortTex:
         m_Texture: {fileID: 2800000, guid: ffaa78c2ccd35374fa1c1338cb4e51f2, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -83,7 +83,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0638dcc9d4758401c825d9f1f0445595, type: 3}
+        m_Texture: {fileID: 2800000, guid: cae4c042cd3a44d94bc4cad7923b38fd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
@@ -112,13 +112,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ActiveAlphaClip: 2
+    - _ActiveAlphaClip: 0
     - _ActiveColorAdjustment: 1
     - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 1
     - _ActiveDistort: 1
     - _ActiveEmission: 0
-    - _ActiveExternalAlpha: 0
+    - _ActiveExternalAlpha: 4
     - _ActiveExtraFeatures: 0
     - _ActiveFresnel: 0
     - _ActiveHardClipDissolve: 0
@@ -133,7 +133,7 @@ Material:
     - _ActiveVertexOffsetMask: 0
     - _AdditionalBounceRange: 0.5
     - _AdditionalLightIntensity: 1
-    - _AlphaClipRange: 0.7
+    - _AlphaClipRange: 0.5
     - _AlphaClipRangeController: 0
     - _AnimationPlayableSlider: 0
     - _AnimationPlayableSliderController: 0
@@ -151,8 +151,8 @@ Material:
     - _DecalRenderMode: 0
     - _DestBlend: 10
     - _DissolveCalculateMode: 1
-    - _DissolveChannel: 0
-    - _DissolveIntensity: 0.5
+    - _DissolveChannel: 3
+    - _DissolveIntensity: 1
     - _DissolveIntensityController: 2
     - _DissolveTexUVAutoOffset: 1
     - _DissolveTexUVChannel: 0
