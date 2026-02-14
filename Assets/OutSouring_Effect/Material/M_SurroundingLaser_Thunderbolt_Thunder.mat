@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _ACTIVEVERTEXOFFSET_ENABLE
   - _MAINTEXMODE_NORMAL
+  - _VERTEXOFFSETDIRECTION_NORMAL
   - _VERTEXOFFSETTEXWRAPMODE_LINEAR_REPEAT
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
@@ -51,6 +52,7 @@ Material:
   - _PARTICLEMODE_NORMAL
   - _RECEIVESHADOW_DISABLE
   - _VERTEXOFFSETMASKWRAPMODE_SELFSETTING
+  - _VERTEXOFFSETTEXUVAUTOOFFSET_ON
   - _VERTEXOFFSETTEXUVCHANNEL_UV1
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -240,6 +242,7 @@ Material:
     - _SourceBlend: 5
     - _VertexOffsetCameraDistance: 0
     - _VertexOffsetCameraDistanceController: 0
+    - _VertexOffsetDirection: 0
     - _VertexOffsetIntensity: 0.2
     - _VertexOffsetIntensityController: 0
     - _VertexOffsetMaskIntensity: 1

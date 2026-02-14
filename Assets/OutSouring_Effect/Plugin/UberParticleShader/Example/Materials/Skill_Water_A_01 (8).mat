@@ -9,18 +9,21 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Skill_Water_A_01 (8)
   m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ACTIVEDISTORT_ENABLE
   - _ACTIVERAMP_ENABLE
-  - _DECALRENDERMODE_NORMAL
   - _DISSOLVETEXUVCHANNEL_UV2
   - _DISTORTTEXWRAPMODE_LINEAR_REPEAT
   - _MAINTEXMODE_NORMAL
   - _MAINTEXWRAPMODE_LINEAR_REPEAT
   - _PARALLAXTEXWRAPMODE_LINEAR_REPEAT
+  - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
   - _ACTIVECOLORADJUSTMENT_DISABLE
+  - _ACTIVEDECALWORLDNORMALMASK_DISABLE
   - _ACTIVEDISSOLVE_DISABLE
   - _ACTIVEEMISSION_DISABLE
   - _ACTIVEEXTERNALALPHA_DISABLE
@@ -35,6 +38,7 @@ Material:
   - _ACTIVESOFTPARTICLE_DISABLE
   - _ACTIVEVERTEXOFFSETMASK_DISABLE
   - _ACTIVEVERTEXOFFSET_DISABLE
+  - _DECALRENDERMODE_NORMAL
   - _DISSOLVETEXWRAPMODE_SELFSETTING
   - _DISTORTTEXUVAUTOOFFSET_ON
   - _DISTORTTEXUVCHANNEL_UV1
@@ -62,6 +66,7 @@ Material:
   disabledShaderPasses:
   - SHADOWCASTER
   - DepthOnly
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -181,6 +186,7 @@ Material:
     m_Floats:
     - _ActiveAlphaClip: 0
     - _ActiveColorAdjustment: 0
+    - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 0
     - _ActiveDistort: 1
     - _ActiveEmission: 0
@@ -226,6 +232,7 @@ Material:
     - _DestBlend: 10
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DissolveCalculateMode: 0
     - _DissolveChannel: 0
     - _DissolveIntensity: 0
     - _DissolveIntensityController: 1
@@ -247,8 +254,11 @@ Material:
     - _EmissionTexUVAutoOffset: 0
     - _EmissionTexUVChannel: 0
     - _EmissionTexWrapMode: 0
+    - _EnableHighPrecisionFlowMap: 0
     - _EnhanceRampColor: 2
     - _EnvironmentReflections: 1
+    - _ExternalAlphaIntensity: 1
+    - _ExternalAlphaIntensityController: 0
     - _ExternalAlphaPower: 10
     - _ExternalAlphaPowerController: 0
     - _ExternalAlphaRange: 0.5
@@ -316,6 +326,7 @@ Material:
     - _ReceiveShadows: 1
     - _Ref: 0
     - _RenderMode: 0
+    - _ReverseFlowMap_G_Color: 0
     - _RimDissolveColorMode: 0
     - _RimDissolveRange: 1
     - _RimDissolveRangeController: 0
@@ -332,6 +343,7 @@ Material:
     - _Surface: 0
     - _VertexOffsetCameraDistance: 0
     - _VertexOffsetCameraDistanceController: 0
+    - _VertexOffsetDirection: 0
     - _VertexOffsetIntensity: 0
     - _VertexOffsetIntensityController: 0
     - _VertexOffsetMaskChannel: 0
@@ -350,6 +362,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DecalWorldNormalMaskAxis: {r: 0, g: 1, b: 0, a: 0}
     - _DissolveTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
     - _DistortTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 1.4980392, g: 1.4980392, b: 1.4980392, a: 1}

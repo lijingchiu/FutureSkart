@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _ACTIVEDISSOLVE_ENABLE
   - _MAINTEXMODE_NORMAL
+  - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
   - _ACTIVECOLORADJUSTMENT_DISABLE
@@ -33,6 +34,7 @@ Material:
   - _ACTIVEVERTEXOFFSETMASK_DISABLE
   - _ACTIVEVERTEXOFFSET_DISABLE
   - _DECALRENDERMODE_NORMAL
+  - _DISSOLVETEXUVAUTOOFFSET_ON
   - _DISSOLVETEXUVCHANNEL_UV1
   - _DISSOLVETEXWRAPMODE_SELFSETTING
   - _DISTORTTEXUVCHANNEL_UV1
@@ -240,6 +242,7 @@ Material:
     - _SourceBlend: 5
     - _VertexOffsetCameraDistance: 0
     - _VertexOffsetCameraDistanceController: 0
+    - _VertexOffsetDirection: 0
     - _VertexOffsetIntensity: 0
     - _VertexOffsetIntensityController: 0
     - _VertexOffsetMaskIntensity: 1

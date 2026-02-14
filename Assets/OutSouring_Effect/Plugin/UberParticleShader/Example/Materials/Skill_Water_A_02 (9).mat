@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Skill_Water_A_02 (9)
   m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ACTIVEEMISSION_POLARCOORD
   - _ACTIVERAMP_ENABLE
@@ -18,6 +20,7 @@ Material:
   - _MAINTEXMODE_NORMAL
   - _NORMALTEXWRAPMODE_LINEAR_REPEAT
   - _PARALLAXTEXWRAPMODE_LINEAR_REPEAT
+  - _VERTEXOFFSETDIRECTION_NORMAL
   - _VERTEXOFFSETMASKWRAPMODE_LINEAR_CLAMP
   - _VERTEXOFFSETTEXUVCHANNEL_UV2
   - _VERTEXOFFSETTEXWRAPMODE_LINEAR_REPEAT
@@ -65,6 +68,7 @@ Material:
   disabledShaderPasses:
   - SHADOWCASTER
   - DepthOnly
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -230,6 +234,7 @@ Material:
     - _DestBlend: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DissolveCalculateMode: 0
     - _DissolveChannel: 0
     - _DissolveIntensity: 0
     - _DissolveIntensityController: 1
@@ -251,8 +256,11 @@ Material:
     - _EmissionTexUVAutoOffset: 1
     - _EmissionTexUVChannel: 0
     - _EmissionTexWrapMode: 1
+    - _EnableHighPrecisionFlowMap: 0
     - _EnhanceRampColor: 1
     - _EnvironmentReflections: 1
+    - _ExternalAlphaIntensity: 1
+    - _ExternalAlphaIntensityController: 0
     - _ExternalAlphaPower: 2
     - _ExternalAlphaPowerController: 0
     - _ExternalAlphaRange: 0
@@ -320,6 +328,7 @@ Material:
     - _ReceiveShadows: 1
     - _Ref: 0
     - _RenderMode: 1
+    - _ReverseFlowMap_G_Color: 0
     - _RimDissolveColorMode: 0
     - _RimDissolveRange: 1
     - _RimDissolveRangeController: 0
@@ -336,6 +345,7 @@ Material:
     - _Surface: 0
     - _VertexOffsetCameraDistance: 0
     - _VertexOffsetCameraDistanceController: 0
+    - _VertexOffsetDirection: 0
     - _VertexOffsetIntensity: 0.1
     - _VertexOffsetIntensityController: 0
     - _VertexOffsetMaskChannel: 0

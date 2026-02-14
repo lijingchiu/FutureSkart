@@ -20,6 +20,7 @@ Material:
   - _EMISSIONTEXWRAPMODE_LINEAR_REPEAT
   - _MAINTEXMODE_NORMAL
   - _MAINTEXWRAPMODE_LINEAR_CLAMP
+  - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
   - _ACTIVECOLORADJUSTMENT_DISABLE
@@ -243,6 +244,7 @@ Material:
     - _SourceBlend: 5
     - _VertexOffsetCameraDistance: 0
     - _VertexOffsetCameraDistanceController: 0
+    - _VertexOffsetDirection: 0
     - _VertexOffsetIntensity: 0
     - _VertexOffsetIntensityController: 0
     - _VertexOffsetMaskIntensity: 1
