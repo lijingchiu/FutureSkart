@@ -79,9 +79,9 @@ public class DuplicateEffectMaterial : Editor
         // --- 新增功能結束 ---
 
         // 9. 選中並高亮新材質
-        EditorUtility.FocusProjectWindow();
-        Selection.activeObject = newMat;
-        EditorGUIUtility.PingObject(newMat);
+        // EditorUtility.FocusProjectWindow();
+        // Selection.activeObject = newMat;
+        // EditorGUIUtility.PingObject(newMat);
 
         Debug.Log($"<color=#00FF00>成功複製並替換材質：</color> 從 '{sourceMat.name}' 複製為 '{finalName}'");
     }

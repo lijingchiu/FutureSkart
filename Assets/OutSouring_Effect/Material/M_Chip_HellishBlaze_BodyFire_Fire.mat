@@ -14,6 +14,7 @@ Material:
   m_ValidKeywords:
   - _ACTIVECOLORADJUSTMENT_ENABLE
   - _ACTIVEDISSOLVE_ENABLE
+  - _ACTIVEDISTORT_ENABLE
   - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
   - _MAINTEXMODE_FLIPBOOK
   - _MAINTEXWRAPMODE_LINEAR_CLAMP
@@ -21,7 +22,6 @@ Material:
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
   - _ACTIVEDECALWORLDNORMALMASK_DISABLE
-  - _ACTIVEDISTORT_DISABLE
   - _ACTIVEEMISSION_DISABLE
   - _ACTIVEEXTERNALALPHA_DISABLE
   - _ACTIVEEXTRAFEATURES_DISABLE
@@ -75,7 +75,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: -1, y: 0}
     - _DistortTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8f280452436ff3548a15e7b27a7a1d58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionTex:
@@ -116,7 +116,7 @@ Material:
     - _ActiveColorAdjustment: 1
     - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 1
-    - _ActiveDistort: 0
+    - _ActiveDistort: 1
     - _ActiveEmission: 0
     - _ActiveExternalAlpha: 0
     - _ActiveExtraFeatures: 0
@@ -159,8 +159,8 @@ Material:
     - _DissolveTexWrapMode: 1
     - _DistortCenterUV: 0
     - _DistortChannel: 0
-    - _DistortImpactTarget: 1
-    - _DistortIntensity: 0
+    - _DistortImpactTarget: 3
+    - _DistortIntensity: 0.13
     - _DistortIntensityController: 0
     - _DistortTexUVAutoOffset: 0
     - _DistortTexUVChannel: 0

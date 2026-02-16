@@ -12,16 +12,16 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ACTIVECOLORADJUSTMENT_ENABLE
   - _ACTIVEDISSOLVE_ENABLE
+  - _ACTIVEDISTORT_ENABLE
   - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
   - _MAINTEXMODE_FLIPBOOK
   - _MAINTEXWRAPMODE_LINEAR_CLAMP
   - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
+  - _ACTIVECOLORADJUSTMENT_DISABLE
   - _ACTIVEDECALWORLDNORMALMASK_DISABLE
-  - _ACTIVEDISTORT_DISABLE
   - _ACTIVEEMISSION_DISABLE
   - _ACTIVEEXTERNALALPHA_DISABLE
   - _ACTIVEEXTRAFEATURES_DISABLE
@@ -74,7 +74,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ffaa78c2ccd35374fa1c1338cb4e51f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionTex:
@@ -112,10 +112,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _ActiveAlphaClip: 0
-    - _ActiveColorAdjustment: 1
+    - _ActiveColorAdjustment: 0
     - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 1
-    - _ActiveDistort: 0
+    - _ActiveDistort: 1
     - _ActiveEmission: 0
     - _ActiveExternalAlpha: 0
     - _ActiveExtraFeatures: 0
@@ -144,7 +144,7 @@ Material:
     - _ClampMainTexUV: 0
     - _ColorAdjustmentLayerMask: 4
     - _Comp: 0
-    - _ContrastVal: 0.9
+    - _ContrastVal: 0.95
     - _ContrastValController: 0
     - _Cull: 0
     - _DecalRenderMode: 0
@@ -158,8 +158,8 @@ Material:
     - _DissolveTexWrapMode: 1
     - _DistortCenterUV: 0
     - _DistortChannel: 0
-    - _DistortImpactTarget: 1
-    - _DistortIntensity: 0
+    - _DistortImpactTarget: 3
+    - _DistortIntensity: 0.15
     - _DistortIntensityController: 0
     - _DistortTexUVAutoOffset: 0
     - _DistortTexUVChannel: 0

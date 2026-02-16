@@ -90,9 +90,9 @@ public class CreateEffectMaterial : Editor
         // =========================================================
 
         // 8. 用戶體驗優化：建立後自動選中新材質並高亮顯示
-        EditorUtility.FocusProjectWindow();
-        Selection.activeObject = newMat;
-        EditorGUIUtility.PingObject(newMat);
+        // EditorUtility.FocusProjectWindow();
+        // Selection.activeObject = newMat;
+        // EditorGUIUtility.PingObject(newMat);
 
         Debug.Log($"<color=#00FF00>成功建立材質球：</color> {fullPath}");
     }

@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ACTIVEDISSOLVE_ENABLE
+  - _ACTIVEDISTORT_ENABLE
   - _ACTIVERAMP_ENABLE
   - _ACTIVESOFTPARTICLE_ENABLE
   - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
@@ -22,7 +23,6 @@ Material:
   - _ACTIVEALPHACLIP_DISABLE
   - _ACTIVECOLORADJUSTMENT_DISABLE
   - _ACTIVEDECALWORLDNORMALMASK_DISABLE
-  - _ACTIVEDISTORT_DISABLE
   - _ACTIVEEMISSION_DISABLE
   - _ACTIVEEXTERNALALPHA_DISABLE
   - _ACTIVEEXTRAFEATURES_DISABLE
@@ -70,11 +70,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DissolveTex:
-        m_Texture: {fileID: 2800000, guid: 90d7b35f1b148314ca1022f6b559b6de, type: 3}
+        m_Texture: {fileID: 2800000, guid: ffaa78c2ccd35374fa1c1338cb4e51f2, type: 3}
         m_Scale: {x: 0.75, y: 0.75}
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8f280452436ff3548a15e7b27a7a1d58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionTex:
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f8bd86655d2fe458da35fa9a35ba86b5, type: 3}
+        m_Texture: {fileID: 2800000, guid: c8bb7e47cf3ae0d4b82e8e45b8091aef, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
@@ -115,7 +115,7 @@ Material:
     - _ActiveColorAdjustment: 0
     - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 1
-    - _ActiveDistort: 0
+    - _ActiveDistort: 1
     - _ActiveEmission: 0
     - _ActiveExternalAlpha: 0
     - _ActiveExtraFeatures: 0
@@ -159,7 +159,7 @@ Material:
     - _DistortCenterUV: 0
     - _DistortChannel: 0
     - _DistortImpactTarget: 1
-    - _DistortIntensity: 0
+    - _DistortIntensity: -0
     - _DistortIntensityController: 0
     - _DistortTexUVAutoOffset: 0
     - _DistortTexUVChannel: 0
@@ -260,7 +260,7 @@ Material:
     - _DistortTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
-    - _FlipBookSetting: {r: 4, g: 6, b: 0, a: 1}
+    - _FlipBookSetting: {r: 12, g: 7, b: 0, a: 1}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
