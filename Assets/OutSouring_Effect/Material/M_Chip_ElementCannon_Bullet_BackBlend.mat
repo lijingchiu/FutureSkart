@@ -7,27 +7,31 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_MissleExplosion_Fire
+  m_Name: M_Chip_ElementCannon_Bullet_BackBlend
   m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ACTIVEDISSOLVE_ENABLE
+  - _ACTIVEDISTORT_ENABLE
+  - _ACTIVEEMISSION_ENABLE
+  - _ACTIVEEXTERNALALPHA_LINE
+  - _ACTIVERAMP_ENABLE
+  - _DISSOLVETEXWRAPMODE_LINEAR_REPEAT
+  - _DISTORTTEXWRAPMODE_LINEAR_REPEAT
+  - _EMISSIONTEXWRAPMODE_LINEAR_REPEAT
   - _MAINTEXMODE_NORMAL
+  - _MAINTEXWRAPMODE_LINEAR_REPEAT
   - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
   - _ACTIVEALPHACLIP_DISABLE
   - _ACTIVECOLORADJUSTMENT_DISABLE
   - _ACTIVEDECALWORLDNORMALMASK_DISABLE
-  - _ACTIVEDISTORT_DISABLE
-  - _ACTIVEEMISSION_DISABLE
-  - _ACTIVEEXTERNALALPHA_DISABLE
   - _ACTIVEEXTRAFEATURES_DISABLE
   - _ACTIVEFRESNEL_DISABLE
   - _ACTIVELIGHTSYSTEM_DISABLE
   - _ACTIVENORMAL_DISABLE
   - _ACTIVEPARALLAX_DISABLE
-  - _ACTIVERAMP_DISABLE
   - _ACTIVERIMDISSOLVE_DISABLE
   - _ACTIVESIDEFACECOLOR_DISABLE
   - _ACTIVESOFTPARTICLE_DISABLE
@@ -35,14 +39,12 @@ Material:
   - _ACTIVEVERTEXOFFSET_DISABLE
   - _DECALRENDERMODE_NORMAL
   - _DISSOLVETEXUVCHANNEL_UV1
-  - _DISSOLVETEXWRAPMODE_SELFSETTING
   - _DISTORTTEXUVCHANNEL_UV1
-  - _DISTORTTEXWRAPMODE_SELFSETTING
+  - _EMISSIONTEXUVAUTOOFFSET_ON
   - _EMISSIONTEXUVCHANNEL_UV1
-  - _EMISSIONTEXWRAPMODE_SELFSETTING
   - _GRABPASSTEXMODE_NORMAL
+  - _MAINTEXUVAUTOOFFSET_ON
   - _MAINTEXUVCHANNEL_UV1
-  - _MAINTEXWRAPMODE_SELFSETTING
   - _NORMALTEXUVCHANNEL_UV1
   - _NORMALTEXWRAPMODE_SELFSETTING
   - _PARALLAXNOISESTEPTEXWRAPMODE_SELFSETTING
@@ -70,21 +72,21 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DissolveTex:
-        m_Texture: {fileID: 2800000, guid: 673948c24d2f2c74c806ca4fee4b3679, type: 3}
+        m_Texture: {fileID: 2800000, guid: a3f67199a87aa6c48905648511db4a44, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: fcd6c31d890ae5d47954acb1f00f897e, type: 3}
+        m_Scale: {x: 2, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: bacf7b306139fb84d84dae6918ba1066, type: 3}
+        m_Scale: {x: 3, y: 0.94}
+        m_Offset: {x: -1.11, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 673948c24d2f2c74c806ca4fee4b3679, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 7e2fbd89b77da784190619e82ef5ebea, type: 3}
+        m_Scale: {x: 1.5, y: 1}
+        m_Offset: {x: -1, y: 0}
     - _NormalTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -98,7 +100,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RampTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 59feefa1ff3fe490c9ec9d5b8dac14f3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _VertexOffsetMask:
@@ -115,16 +117,16 @@ Material:
     - _ActiveColorAdjustment: 0
     - _ActiveDecalWorldNormalMask: 0
     - _ActiveDissolve: 1
-    - _ActiveDistort: 0
-    - _ActiveEmission: 0
-    - _ActiveExternalAlpha: 0
+    - _ActiveDistort: 1
+    - _ActiveEmission: 1
+    - _ActiveExternalAlpha: 1
     - _ActiveExtraFeatures: 0
     - _ActiveFresnel: 0
     - _ActiveHardClipDissolve: 0
     - _ActiveLightSystem: 0
     - _ActiveNormal: 0
     - _ActiveParallax: 0
-    - _ActiveRamp: 0
+    - _ActiveRamp: 1
     - _ActiveRimDissolve: 0
     - _ActiveSideFaceColor: 0
     - _ActiveSoftParticle: 0
@@ -151,37 +153,37 @@ Material:
     - _DestBlend: 10
     - _DissolveCalculateMode: 0
     - _DissolveChannel: 0
-    - _DissolveIntensity: 1
-    - _DissolveIntensityController: 1
+    - _DissolveIntensity: 0.84
+    - _DissolveIntensityController: 0
     - _DissolveTexUVAutoOffset: 0
     - _DissolveTexUVChannel: 0
-    - _DissolveTexWrapMode: 0
+    - _DissolveTexWrapMode: 1
     - _DistortCenterUV: 0
     - _DistortChannel: 0
-    - _DistortImpactTarget: 1
-    - _DistortIntensity: 0
+    - _DistortImpactTarget: 10
+    - _DistortIntensity: 0.06
     - _DistortIntensityController: 0
     - _DistortTexUVAutoOffset: 0
     - _DistortTexUVChannel: 0
-    - _DistortTexWrapMode: 0
+    - _DistortTexWrapMode: 1
     - _EmissionColorMode: 0
     - _EmissionIntensity: 1
     - _EmissionIntensityController: 0
-    - _EmissionTexUVAutoOffset: 0
+    - _EmissionTexUVAutoOffset: 1
     - _EmissionTexUVChannel: 0
-    - _EmissionTexWrapMode: 0
+    - _EmissionTexWrapMode: 1
     - _EnableHighPrecisionFlowMap: 0
-    - _EnhanceRampColor: 1
-    - _ExternalAlphaIntensity: 1
+    - _EnhanceRampColor: 8.6
+    - _ExternalAlphaIntensity: 1.1
     - _ExternalAlphaIntensityController: 0
-    - _ExternalAlphaPower: 1
+    - _ExternalAlphaPower: 3
     - _ExternalAlphaPowerController: 0
-    - _ExternalAlphaRange: 0
+    - _ExternalAlphaRange: -0.05
     - _ExternalAlphaRangeController: 0
     - _Fail: 0
     - _FinalAlphaIntensity: 1
     - _FinalAlphaIntensityController: 0
-    - _FinalColorIntensity: 10
+    - _FinalColorIntensity: 1
     - _FinalColorIntensityController: 0
     - _FlipFresnelAlphaRange: 0
     - _FlipFresnelColorRange: 0
@@ -206,9 +208,9 @@ Material:
     - _MainTexGIntensityController: 0
     - _MainTexG_Intensity: 0
     - _MainTexMode: 0
-    - _MainTexUVAutoOffset: 0
+    - _MainTexUVAutoOffset: 1
     - _MainTexUVChannel: 0
-    - _MainTexWrapMode: 0
+    - _MainTexWrapMode: 1
     - _NormalBounceLightRange: 1
     - _NormalIntensity: 0
     - _NormalIntensityController: 0
@@ -262,7 +264,7 @@ Material:
     - _EmissionTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
     - _FlipBookSetting: {r: 1, g: 1, b: 1, a: 0}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
-    - _MainTexColor: {r: 2.996079, g: 2.996079, b: 2.996079, a: 1}
+    - _MainTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
     - _NormalTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
     - _ParallaxTexUVTileController: {r: 0, g: 0, b: 0, a: 0}
