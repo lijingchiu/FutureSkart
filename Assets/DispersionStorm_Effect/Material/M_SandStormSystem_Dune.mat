@@ -7,11 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_SurroundingLaser_Main_Ring
+  m_Name: M_SandStormSystem_Dune
   m_Shader: {fileID: 4800000, guid: 84b6fd38f8825a74cb85eb90f0556cd3, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ACTIVESOFTPARTICLE_ENABLE
   - _MAINTEXMODE_NORMAL
   - _VERTEXOFFSETDIRECTION_NORMAL
   m_InvalidKeywords:
@@ -30,7 +31,6 @@ Material:
   - _ACTIVERAMP_DISABLE
   - _ACTIVERIMDISSOLVE_DISABLE
   - _ACTIVESIDEFACECOLOR_DISABLE
-  - _ACTIVESOFTPARTICLE_DISABLE
   - _ACTIVEVERTEXOFFSETMASK_DISABLE
   - _ACTIVEVERTEXOFFSET_DISABLE
   - _DECALRENDERMODE_NORMAL
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2eddd6ce29b2e404dbfb78545b5b0990, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
@@ -127,7 +127,7 @@ Material:
     - _ActiveRamp: 0
     - _ActiveRimDissolve: 0
     - _ActiveSideFaceColor: 0
-    - _ActiveSoftParticle: 0
+    - _ActiveSoftParticle: 1
     - _ActiveVertexOffset: 0
     - _ActiveVertexOffsetMask: 0
     - _AdditionalBounceRange: 0.5
@@ -142,13 +142,13 @@ Material:
     - _AntiShineGlowValController: 0
     - _ChangeSide: 0
     - _ClampMainTexUV: 0
-    - _ColorAdjustmentLayerMask: 1
+    - _ColorAdjustmentLayerMask: 3
     - _Comp: 0
     - _ContrastVal: 1
     - _ContrastValController: 0
     - _Cull: 0
     - _DecalRenderMode: 0
-    - _DestBlend: 1
+    - _DestBlend: 10
     - _DissolveCalculateMode: 0
     - _DissolveChannel: 0
     - _DissolveIntensity: 0
@@ -159,9 +159,9 @@ Material:
     - _DistortCenterUV: 0
     - _DistortChannel: 0
     - _DistortImpactTarget: 1
-    - _DistortIntensity: 0
+    - _DistortIntensity: 0.1
     - _DistortIntensityController: 0
-    - _DistortTexUVAutoOffset: 0
+    - _DistortTexUVAutoOffset: 1
     - _DistortTexUVChannel: 0
     - _DistortTexWrapMode: 0
     - _EmissionColorMode: 0
@@ -174,14 +174,14 @@ Material:
     - _EnhanceRampColor: 1
     - _ExternalAlphaIntensity: 1
     - _ExternalAlphaIntensityController: 0
-    - _ExternalAlphaPower: 1
+    - _ExternalAlphaPower: 18
     - _ExternalAlphaPowerController: 0
-    - _ExternalAlphaRange: 0
+    - _ExternalAlphaRange: 0.02
     - _ExternalAlphaRangeController: 0
     - _Fail: 0
     - _FinalAlphaIntensity: 1
     - _FinalAlphaIntensityController: 0
-    - _FinalColorIntensity: 5
+    - _FinalColorIntensity: 1
     - _FinalColorIntensityController: 0
     - _FlipFresnelAlphaRange: 0
     - _FlipFresnelColorRange: 0
@@ -194,7 +194,7 @@ Material:
     - _GrabPassIntensity: 1
     - _GrabPassIntensityController: 0
     - _GrabPassTexMode: 0
-    - _HUEShiftVal: 0
+    - _HUEShiftVal: -0.01
     - _HUEShiftValController: 0
     - _HeightSampleSteps: 32
     - _InverseAlphaVal: 0
@@ -230,14 +230,14 @@ Material:
     - _ReClampAnimationVertexVector: 0
     - _ReceiveShadow: 0
     - _Ref: 0
-    - _RenderMode: 1
+    - _RenderMode: 0
     - _ReverseFlowMap_G_Color: 0
     - _RimDissolveColorMode: 0
     - _RimDissolveRange: 1
     - _RimDissolveRangeController: 0
     - _SaturationVal: 1
     - _SaturationValController: 0
-    - _SoftRange: 1
+    - _SoftRange: 100
     - _SourceBlend: 5
     - _VertexOffsetCameraDistance: 0
     - _VertexOffsetCameraDistanceController: 0
