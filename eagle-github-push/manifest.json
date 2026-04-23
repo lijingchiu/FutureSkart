@@ -1,13 +1,12 @@
 {
-  "id": "FUTURESKART_GITHUB_PUSH_V1",
-  "version": "1.1.0",
+  "id": "LKJM9GITHUB_PUSH_V2",
+  "version": "2.0.0",
   "name": "GitHub Push",
   "logo": "logo.png",
-  "keywords": ["github", "push", "upload", "git", "commit"],
+  "keywords": ["github", "push", "upload", "git"],
   "main": "index.html",
-  "platform": ["win32", "darwin", "linux"],
+  "platform": ["darwin", "win32", "linux"],
   "arch": ["x64", "arm64"],
-  "devTools": false,
-  "width": 420,
-  "height": 580
+  "width": 440,
+  "height": 600
 }
