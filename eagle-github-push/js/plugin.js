@@ -1,39 +1,26 @@
-/* Eagle GitHub Push Plugin – plugin.js
- * Reads selected Eagle items and pushes them to a GitHub repository
- * via the GitHub Contents REST API.
- */
-
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
+// ── Settings (localStorage) ──────────────────────────────────────────────────
 
-// ─── Settings storage (localStorage) ────────────────────────────────────────
-
-const STORAGE_KEY = 'eagle_github_push_settings';
+const STORAGE_KEY = 'eagle_github_push_v1';
 
 function loadSettings() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch { return {}; }
+}
+function saveSettings(s) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
 }
 
-function saveSettings(settings) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-}
+// ── GitHub API ───────────────────────────────────────────────────────────────
 
-// ─── GitHub API ──────────────────────────────────────────────────────────────
-
-async function githubRequest(method, apiPath, token, body = null) {
+async function ghRequest(method, apiPath, token, body) {
   const opts = {
     method,
     headers: {
       Authorization: `token ${token}`,
       Accept: 'application/vnd.github.v3+json',
-      'User-Agent': 'Eagle-GitHub-Push-Plugin/1.0',
+      'User-Agent': 'Eagle-GitHub-Push/1.1',
     },
   };
   if (body) {
@@ -46,380 +33,357 @@ async function githubRequest(method, apiPath, token, body = null) {
 }
 
 async function getFileSha(token, owner, repo, filePath, branch) {
-  const { ok, data } = await githubRequest(
+  const { ok, data } = await ghRequest(
     'GET',
-    `/repos/${owner}/${repo}/contents/${encodeURIPath(filePath)}?ref=${branch}`,
+    `/repos/${owner}/${repo}/contents/${encPath(filePath)}?ref=${branch}`,
     token
   );
   return ok && data.sha ? data.sha : null;
 }
 
-async function pushFile(token, owner, repo, branch, filePath, content, message) {
+async function pushFileToGH(token, owner, repo, branch, filePath, b64content, message) {
   const sha = await getFileSha(token, owner, repo, filePath, branch);
-  const body = { message, content, branch };
+  const body = { message, content: b64content, branch };
   if (sha) body.sha = sha;
-
-  return githubRequest(
-    'PUT',
-    `/repos/${owner}/${repo}/contents/${encodeURIPath(filePath)}`,
-    token,
-    body
-  );
+  return ghRequest('PUT', `/repos/${owner}/${repo}/contents/${encPath(filePath)}`, token, body);
 }
 
-async function testConnection(token, owner, repo) {
-  return githubRequest('GET', `/repos/${owner}/${repo}`, token);
-}
-
-function encodeURIPath(p) {
+function encPath(p) {
   return p.split('/').map(encodeURIComponent).join('/');
 }
 
-// ─── File helpers ─────────────────────────────────────────────────────────────
+// ── File helpers ─────────────────────────────────────────────────────────────
 
-function fileToBase64(filePath) {
-  const buf = fs.readFileSync(filePath);
-  return buf.toString('base64');
+function readFileBase64(filePath) {
+  const fs = require('fs');
+  return fs.readFileSync(filePath).toString('base64');
 }
 
-function formatBytes(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+function fileExists(filePath) {
+  try { require('fs').accessSync(filePath); return true; }
+  catch { return false; }
 }
 
-// ─── Log ─────────────────────────────────────────────────────────────────────
-
-function addLog(msg, type = 'info') {
-  const logEl = document.getElementById('push-log');
-  const entries = document.getElementById('log-entries');
-  logEl.classList.remove('hidden');
-
-  const now = new Date().toLocaleTimeString('zh-TW', { hour12: false });
-  const div = document.createElement('div');
-  div.className = 'log-entry';
-  div.innerHTML = `<span class="log-time">${now}</span><span class="log-msg ${type}">${escHtml(msg)}</span>`;
-  entries.appendChild(div);
-  entries.scrollTop = entries.scrollHeight;
+function fmtBytes(b) {
+  if (!b) return '';
+  if (b < 1024) return `${b} B`;
+  if (b < 1048576) return `${(b / 1024).toFixed(1)} KB`;
+  return `${(b / 1048576).toFixed(1)} MB`;
 }
 
-function escHtml(str) {
-  return String(str)
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function esc(s) {
+  return String(s || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 }
 
-// ─── Settings tab ─────────────────────────────────────────────────────────────
+function $id(id) { return document.getElementById(id); }
 
-function initSettingsTab() {
-  const settings = loadSettings();
-  if (settings.token)  document.getElementById('github-token').value  = settings.token;
-  if (settings.repo)   document.getElementById('github-repo').value   = settings.repo;
-  if (settings.branch) document.getElementById('github-branch').value = settings.branch;
-  if (settings.targetPath !== undefined) document.getElementById('github-path').value = settings.targetPath;
-  if (settings.useSubfolder) document.getElementById('use-subfolder').checked = true;
+function showEl(el, show) {
+  if (typeof el === 'string') el = $id(el);
+  el.style.display = show ? '' : 'none';
+}
 
-  // Toggle password visibility
-  document.querySelectorAll('.btn-toggle-pass').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const input = document.getElementById(btn.dataset.target);
-      input.type = input.type === 'password' ? 'text' : 'password';
-    });
+// ── Log ─────────────────────────────────────────────────────────────────────
+
+function addLog(msg, type = 'info') {
+  showEl('push-log', true);
+  const entries = $id('log-entries');
+  const t = new Date().toLocaleTimeString('zh-TW', { hour12: false });
+  const row = document.createElement('div');
+  row.className = 'le';
+  row.innerHTML = `<span class="le-t">${t}</span><span class="le-m ${type === 'success' ? 'ok' : type === 'error' ? 'err' : 'info'}">${esc(msg)}</span>`;
+  entries.appendChild(row);
+  entries.scrollTop = entries.scrollHeight;
+}
+
+// ── Settings tab ─────────────────────────────────────────────────────────────
+
+function initSettings() {
+  const s = loadSettings();
+  if (s.token)  $id('github-token').value  = s.token;
+  if (s.repo)   $id('github-repo').value   = s.repo;
+  $id('github-branch').value = s.branch || 'main';
+  $id('github-path').value   = s.targetPath || 'images/';
+  if (s.useSubfolder) $id('use-subfolder').checked = true;
+
+  // Show/hide token
+  $id('btn-show-token').addEventListener('click', () => {
+    const inp = $id('github-token');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
   });
 
-  // Save settings
-  document.getElementById('settings-form').addEventListener('submit', (e) => {
+  // Open token creation page
+  $id('token-help-link').addEventListener('click', (e) => {
     e.preventDefault();
+    if (typeof eagle !== 'undefined' && eagle.shell) {
+      eagle.shell.openExternal('https://github.com/settings/tokens/new?scopes=repo');
+    }
+  });
+
+  // Save
+  $id('btn-save').addEventListener('click', () => {
     const s = collectSettings();
-    if (!s.token) return showSettingsStatus('請填入 GitHub Token', 'error');
-    if (!s.repo || !s.repo.includes('/')) return showSettingsStatus('請填入正確的 Repository (owner/repo)', 'error');
+    if (!s.token) return showMsg('請填入 GitHub Token', 'err');
+    if (!s.repo.includes('/')) return showMsg('Repository 格式應為 owner/repo', 'err');
     saveSettings(s);
-    showSettingsStatus('設定已儲存', 'success');
+    showMsg('設定已儲存 ✓', 'ok');
   });
 
   // Test connection
-  document.getElementById('btn-test-connection').addEventListener('click', async () => {
+  $id('btn-test').addEventListener('click', async () => {
     const s = collectSettings();
-    if (!s.token) return showSettingsStatus('請先填入 GitHub Token', 'error');
-    if (!s.repo || !s.repo.includes('/')) return showSettingsStatus('請先填入 Repository', 'error');
+    if (!s.token) return showMsg('請先填入 Token', 'err');
+    if (!s.repo.includes('/')) return showMsg('請先填入 Repository', 'err');
 
-    const btn = document.getElementById('btn-test-connection');
-    btn.disabled = true;
-    btn.textContent = '測試中…';
-    showSettingsStatus('正在連線到 GitHub…', 'info');
+    const btn = $id('btn-test');
+    btn.disabled = true; btn.textContent = '測試中…';
+    showMsg('連線中…', 'inf');
 
     const [owner, repo] = s.repo.split('/');
-    const { ok, data } = await testConnection(s.token, owner, repo);
+    const { ok, data } = await ghRequest('GET', `/repos/${owner}/${repo}`, s.token);
 
-    btn.disabled = false;
-    btn.textContent = '測試連線';
+    btn.disabled = false; btn.textContent = '測試連線';
 
     if (ok) {
-      showSettingsStatus(`連線成功！${data.full_name}（${data.private ? '私有' : '公開'}）`, 'success');
+      showMsg(`✓ 連線成功！${data.full_name}（${data.private ? '私有' : '公開'}）`, 'ok');
     } else {
-      showSettingsStatus(`連線失敗：${data.message || '未知錯誤'} (${data.status || ''})`, 'error');
+      showMsg(`✗ 連線失敗：${data.message || '未知錯誤'} (HTTP ${data.status || ''})`, 'err');
     }
   });
 }
 
 function collectSettings() {
   return {
-    token: document.getElementById('github-token').value.trim(),
-    repo: document.getElementById('github-repo').value.trim(),
-    branch: document.getElementById('github-branch').value.trim() || 'main',
-    targetPath: document.getElementById('github-path').value.trim(),
-    useSubfolder: document.getElementById('use-subfolder').checked,
+    token:       $id('github-token').value.trim(),
+    repo:        $id('github-repo').value.trim(),
+    branch:      $id('github-branch').value.trim() || 'main',
+    targetPath:  $id('github-path').value.trim(),
+    useSubfolder: $id('use-subfolder').checked,
   };
 }
 
-function showSettingsStatus(msg, type) {
-  const el = document.getElementById('settings-status');
-  el.textContent = msg;
-  el.className = `status-msg ${type}`;
-  el.classList.remove('hidden');
-  setTimeout(() => el.classList.add('hidden'), 5000);
+function showMsg(text, type) {
+  const el = $id('settings-msg');
+  el.textContent = text;
+  el.className = `msg ${type}`;
+  showEl(el, true);
+  clearTimeout(el._t);
+  el._t = setTimeout(() => showEl(el, false), 5000);
 }
 
-// ─── Push tab ─────────────────────────────────────────────────────────────────
+// ── Push tab ─────────────────────────────────────────────────────────────────
 
-let currentItems = [];
+let selectedItems = [];
 
-async function loadSelectedItems() {
-  const noItems = document.getElementById('no-items');
-  const container = document.getElementById('items-container');
-  const list = document.getElementById('items-list');
+async function refreshItems() {
+  selectedItems = [];
 
-  let selected = [];
-  try {
-    selected = await eagle.item.getSelected();
-  } catch (err) {
-    console.error('Failed to get selected items:', err);
-  }
-
-  if (!selected || selected.length === 0) {
-    noItems.classList.remove('hidden');
-    container.classList.add('hidden');
-    currentItems = [];
+  if (typeof eagle === 'undefined') {
+    // Not in Eagle context (browser preview etc.)
+    showEl('no-items', true);
+    showEl('items-view', false);
+    $id('no-items').querySelector('p').textContent = 'Eagle API 未就緒，請稍後再試';
     return;
   }
 
-  currentItems = selected;
-  noItems.classList.add('hidden');
-  container.classList.remove('hidden');
+  let items = [];
+  try { items = await eagle.item.getSelected(); } catch (e) { console.error(e); }
 
-  const countEl = document.getElementById('item-count');
-  countEl.textContent = `已選取 ${selected.length} 個項目`;
+  if (!items || items.length === 0) {
+    showEl('no-items', true);
+    showEl('items-view', false);
+    return;
+  }
 
+  selectedItems = items;
+  showEl('no-items', false);
+  showEl('items-view', true);
+
+  $id('item-count').textContent = `已選取 ${items.length} 個項目`;
+
+  const list = $id('items-list');
   list.innerHTML = '';
-  selected.forEach((item, i) => {
-    const row = buildItemRow(item, i);
-    list.appendChild(row);
-  });
+  items.forEach((item, i) => list.appendChild(buildRow(item, i)));
 }
 
-function buildItemRow(item, index) {
-  const ext = item.ext || '';
+function buildRow(item, idx) {
+  const ext  = item.ext || '';
   const size = item.fileSize || item.size || 0;
 
   const row = document.createElement('div');
   row.className = 'item-row';
-  row.dataset.index = index;
+  row.dataset.idx = idx;
 
-  const thumbEl = item.thumbnailUrl
-    ? `<img class="item-thumb" src="${escHtml(item.thumbnailUrl)}" alt="" onerror="this.style.display='none'">`
-    : `<div class="item-thumb-placeholder">${escHtml(ext.toUpperCase())}</div>`;
+  const thumb = item.thumbnailUrl
+    ? `<img class="item-thumb" src="${esc(item.thumbnailUrl)}" alt="" onerror="this.outerHTML='<div class=item-thumb-ph>${esc(ext)}</div>'">`
+    : `<div class="item-thumb-ph">${esc(ext)}</div>`;
 
   row.innerHTML = `
-    ${thumbEl}
+    ${thumb}
     <div class="item-info">
-      <div class="item-name" title="${escHtml(item.name)}.${escHtml(ext)}">${escHtml(item.name)}.${escHtml(ext)}</div>
-      <div class="item-meta">${size ? formatBytes(size) : ext}</div>
+      <div class="item-name" title="${esc(item.name)}.${esc(ext)}">${esc(item.name)}.${esc(ext)}</div>
+      <div class="item-meta">${esc(fmtBytes(size))}</div>
     </div>
-    <span class="item-status" data-status></span>
-    <button class="item-push-btn" data-index="${index}">推送</button>
+    <span class="item-stat" data-stat></span>
+    <button class="item-btn" data-push-idx="${idx}">推送</button>
   `;
 
-  row.querySelector('.item-push-btn').addEventListener('click', () => pushSingle(index));
+  row.querySelector('[data-push-idx]').addEventListener('click', () => pushOne(idx));
   return row;
 }
 
-function getItemRow(index) {
-  return document.querySelector(`.item-row[data-index="${index}"]`);
-}
-
-function setItemState(index, state, msg) {
-  const row = getItemRow(index);
+function setRowState(idx, state, label) {
+  const row = document.querySelector(`.item-row[data-idx="${idx}"]`);
   if (!row) return;
   row.className = `item-row ${state}`;
-  const statusEl = row.querySelector('[data-status]');
-  statusEl.className = `item-status ${state}`;
 
-  const icons = {
-    pushing: '⏳',
-    done: '✓',
-    failed: '✗',
-    '': '',
-  };
-  statusEl.textContent = msg || icons[state] || '';
+  const stat = row.querySelector('[data-stat]');
+  stat.className = `item-stat ${state}`;
+  stat.textContent = label || { pushing: '…', done: '✓', failed: '✗' }[state] || '';
 
-  const btn = row.querySelector('.item-push-btn');
-  if (state === 'pushing') {
-    btn.disabled = true;
-    btn.textContent = '…';
-  } else if (state === 'done') {
-    btn.disabled = true;
-    btn.textContent = '✓';
-  } else {
-    btn.disabled = false;
-    btn.textContent = '推送';
-  }
+  const btn = row.querySelector('.item-btn');
+  if (state === 'pushing') { btn.disabled = true; btn.textContent = '…'; }
+  else if (state === 'done') { btn.disabled = true; btn.textContent = '✓'; }
+  else { btn.disabled = false; btn.textContent = '推送'; }
 }
 
-function buildTargetPath(settings, item) {
-  const ext = item.ext || '';
-  const fileName = `${item.name}.${ext}`;
-  let base = settings.targetPath || '';
-
-  if (base && !base.endsWith('/')) base += '/';
-
-  if (settings.useSubfolder && item.folders && item.folders.length > 0) {
-    // item.folders is an array of folder IDs; Eagle doesn't expose folder names directly here
-    // so we fall back to not using subfolder names unless the item has a folderName property
-    const folderName = item.folderName || '';
-    if (folderName) base += `${folderName}/`;
-  }
-
-  return base + fileName;
+function buildDestPath(s, item) {
+  const name = `${item.name}.${item.ext || ''}`;
+  let base = (s.targetPath || '').replace(/\/+$/, '');
+  if (s.useSubfolder && item.folderName) base += `/${item.folderName}`;
+  return base ? `${base}/${name}` : name;
 }
 
-function buildCommitMessage(items, custom) {
-  if (custom && custom.trim()) return custom.trim();
+function autoCommitMsg(items) {
+  const custom = $id('commit-message').value.trim();
+  if (custom) return custom;
+  const date = new Date().toISOString().slice(0, 10);
   const names = items.map(i => `${i.name}.${i.ext}`).join(', ');
-  const ts = new Date().toISOString().slice(0, 10);
-  if (names.length > 80) return `Add ${items.length} images via Eagle [${ts}]`;
-  return `Add ${names} via Eagle [${ts}]`;
+  return names.length > 80
+    ? `Add ${items.length} images via Eagle [${date}]`
+    : `Add ${names} via Eagle [${date}]`;
 }
 
-async function pushSingle(index) {
-  const item = currentItems[index];
-  if (!item) return;
-  await doPush([{ item, index }]);
+async function pushOne(idx) {
+  await doPush([{ item: selectedItems[idx], idx }]);
 }
 
 async function pushAll() {
-  const jobs = currentItems.map((item, index) => ({ item, index }));
-  await doPush(jobs);
+  await doPush(selectedItems.map((item, idx) => ({ item, idx })));
 }
 
 async function doPush(jobs) {
-  const settings = loadSettings();
+  const s = loadSettings();
 
-  if (!settings.token) {
-    addLog('尚未設定 GitHub Token，請到「設定」頁面填寫', 'error');
+  if (!s.token) {
+    addLog('尚未設定 GitHub Token，請切換到「設定」頁面', 'error');
     switchTab('settings');
     return;
   }
-  if (!settings.repo || !settings.repo.includes('/')) {
-    addLog('尚未設定 Repository，請到「設定」頁面填寫', 'error');
+  if (!s.repo || !s.repo.includes('/')) {
+    addLog('尚未設定 Repository，請切換到「設定」頁面', 'error');
     switchTab('settings');
     return;
   }
 
-  const [owner, repo] = settings.repo.split('/');
-  const branch = settings.branch || 'main';
-  const customMsg = document.getElementById('commit-message').value.trim();
+  const [owner, repo] = s.repo.split('/');
+  const branch = s.branch || 'main';
+  const msg = autoCommitMsg(jobs.map(j => j.item));
+  const allBtn = $id('btn-push-all');
+  allBtn.disabled = true;
 
-  const pushAllBtn = document.getElementById('btn-push-all');
-  pushAllBtn.disabled = true;
-
-  for (const { item, index } of jobs) {
-    setItemState(index, 'pushing');
+  for (const { item, idx } of jobs) {
+    setRowState(idx, 'pushing');
 
     const filePath = item.filePath || item.path;
-    if (!filePath || !fs.existsSync(filePath)) {
-      setItemState(index, 'failed', '找不到檔案');
-      addLog(`✗ ${item.name}: 找不到本地檔案 (${filePath || '無路徑'})`, 'error');
+
+    if (!filePath || !fileExists(filePath)) {
+      setRowState(idx, 'failed');
+      addLog(`✗ ${item.name}: 找不到本地檔案`, 'error');
       continue;
     }
 
-    let content;
+    let b64;
     try {
-      content = fileToBase64(filePath);
-    } catch (err) {
-      setItemState(index, 'failed', '讀取失敗');
-      addLog(`✗ ${item.name}: 讀取失敗 – ${err.message}`, 'error');
+      b64 = readFileBase64(filePath);
+    } catch (e) {
+      setRowState(idx, 'failed');
+      addLog(`✗ ${item.name}: 讀取失敗 – ${e.message}`, 'error');
       continue;
     }
 
-    const targetPath = buildTargetPath(settings, item);
-    const message = buildCommitMessage([item], customMsg);
-
-    addLog(`⟳ 推送 ${item.name}.${item.ext} → ${targetPath}`, 'info');
+    const dest = buildDestPath(s, item);
+    addLog(`⟳ 上傳 ${item.name}.${item.ext} → ${dest}`, 'info');
 
     try {
-      const { ok, status, data } = await pushFile(settings.token, owner, repo, branch, targetPath, content, message);
+      const { ok, status, data } = await pushFileToGH(s.token, owner, repo, branch, dest, b64, msg);
 
       if (ok) {
-        setItemState(index, 'done');
+        setRowState(idx, 'done');
         const url = data.content && data.content.html_url ? data.content.html_url : '';
-        addLog(`✓ ${item.name}.${item.ext} 推送成功${url ? ` → ${url}` : ''}`, 'success');
+        addLog(`✓ 成功${url ? `：${url}` : ''}`, 'success');
       } else {
-        setItemState(index, 'failed');
-        addLog(`✗ ${item.name}.${item.ext}: ${data.message || '未知錯誤'} (HTTP ${status})`, 'error');
+        setRowState(idx, 'failed');
+        addLog(`✗ ${item.name}: ${data.message || '未知錯誤'} (HTTP ${status})`, 'error');
       }
-    } catch (err) {
-      setItemState(index, 'failed');
-      addLog(`✗ ${item.name}.${item.ext}: 網路錯誤 – ${err.message}`, 'error');
+    } catch (e) {
+      setRowState(idx, 'failed');
+      addLog(`✗ ${item.name}: 網路錯誤 – ${e.message}`, 'error');
     }
   }
 
-  pushAllBtn.disabled = false;
+  allBtn.disabled = false;
 }
 
-// ─── Tab switching ────────────────────────────────────────────────────────────
+// ── Tab switching ─────────────────────────────────────────────────────────────
 
 function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  document.querySelectorAll('.tab-content').forEach(c => {
-    const match = c.id === `tab-${name}`;
-    c.classList.toggle('active', match);
-    c.classList.toggle('hidden', !match);
-  });
+  document.querySelectorAll('.tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.tab === name)
+  );
+  showEl('tab-push',     name === 'push');
+  showEl('tab-settings', name === 'settings');
 }
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
+// ── Boot ─────────────────────────────────────────────────────────────────────
 
-function init() {
+function boot() {
   // Tab clicks
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-  });
+  document.querySelectorAll('.tab').forEach(t =>
+    t.addEventListener('click', () => switchTab(t.dataset.tab))
+  );
 
-  // Refresh buttons
-  document.getElementById('btn-refresh').addEventListener('click', loadSelectedItems);
-  document.getElementById('btn-refresh-list').addEventListener('click', loadSelectedItems);
+  // Refresh
+  $id('btn-refresh').addEventListener('click', refreshItems);
+  $id('btn-refresh-list').addEventListener('click', refreshItems);
 
-  // Push all button
-  document.getElementById('btn-push-all').addEventListener('click', pushAll);
+  // Push all
+  $id('btn-push-all').addEventListener('click', pushAll);
 
   // Clear log
-  document.getElementById('btn-clear-log').addEventListener('click', () => {
-    document.getElementById('log-entries').innerHTML = '';
-    document.getElementById('push-log').classList.add('hidden');
+  $id('btn-clear-log').addEventListener('click', () => {
+    $id('log-entries').innerHTML = '';
+    showEl('push-log', false);
   });
 
-  initSettingsTab();
+  initSettings();
+
+  // Initial load
+  refreshItems();
 }
 
-// ─── Eagle lifecycle ──────────────────────────────────────────────────────────
+// ── Eagle lifecycle ──────────────────────────────────────────────────────────
 
-eagle.onPluginCreate(() => {
-  init();
-  loadSelectedItems();
-});
+// DOMContentLoaded ensures DOM is ready before we touch it
+window.addEventListener('DOMContentLoaded', () => {
+  boot();
 
-eagle.onPluginShow(() => {
-  // Refresh selected items each time the plugin window comes into focus
-  loadSelectedItems();
+  if (typeof eagle !== 'undefined') {
+    // Refresh whenever the plugin window regains focus
+    eagle.onPluginShow(() => refreshItems());
+  }
 });
