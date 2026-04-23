@@ -1,0 +1,11 @@
+{
+  "id": "FUTURESKART_GITHUB_PUSH_V1",
+  "version": "1.0.0",
+  "name": "GitHub Push",
+  "logo": "logo.png",
+  "keywords": ["github", "push", "upload", "git", "commit"],
+  "main": "index.html",
+  "platform": ["win32", "darwin", "linux"],
+  "arch": ["x64", "arm64"],
+  "devTools": false
+}
