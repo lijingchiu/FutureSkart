@@ -4,125 +4,597 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>GitHub Push</title>
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #1e2128;
+      --bg2:    #262b35;
+      --bg3:    #2d3340;
+      --bd:     #3a4050;
+      --tx:     #dde1ea;
+      --dim:    #8890a0;
+      --ac:     #4f8ef7;
+      --acH:    #6ba3ff;
+      --ok:     #3dba74;
+      --er:     #e05c5c;
+      --wa:     #e8a838;
+      --r:      6px;
+      --f:      -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--tx);
+      font-family: var(--f);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    body { display: flex; flex-direction: column; }
+
+    a { color: var(--ac); text-decoration: none; }
+    a:hover { color: var(--acH); }
+    code { font-size: 11px; background: var(--bg3); padding: 1px 4px; border-radius: 3px; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--bd); border-radius: 3px; }
+
+    /* Header */
+    #hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 14px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--bd);
+      flex-shrink: 0;
+    }
+    #hdr-title {
+      display: flex; align-items: center; gap: 7px;
+      font-weight: 600; font-size: 13px; padding: 11px 0;
+    }
+    #tabs { display: flex; }
+    .tab {
+      background: none; border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--dim); cursor: pointer;
+      font-size: 13px; font-family: var(--f);
+      padding: 11px 14px 9px; margin-bottom: -1px;
+      transition: color .15s, border-color .15s;
+    }
+    .tab:hover { color: var(--tx); }
+    .tab.on { color: var(--ac); border-bottom-color: var(--ac); }
+
+    /* Panels */
+    .panel { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 14px; display: none; }
+    .panel.on { display: block; }
+
+    /* Empty state */
+    #no-items {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 12px;
+      padding: 60px 20px; color: var(--dim); text-align: center;
+    }
+    #no-items svg { opacity: .4; }
+    #no-items p { font-size: 13px; line-height: 1.7; }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .dim { color: var(--dim); font-size: 12px; }
+
+    /* Items */
+    #items-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+    .irow {
+      display: flex; align-items: center; gap: 9px;
+      background: var(--bg2); border: 1px solid var(--bd);
+      border-radius: var(--r); padding: 7px 9px;
+      transition: border-color .15s;
+    }
+    .irow:hover { border-color: var(--ac); }
+    .irow.pushing { border-color: var(--wa); }
+    .irow.done    { border-color: var(--ok); }
+    .irow.failed  { border-color: var(--er); }
+    .ithumb {
+      width: 38px; height: 38px; object-fit: cover;
+      border-radius: 4px; flex-shrink: 0; background: var(--bg3);
+    }
+    .ithumb-ph {
+      width: 38px; height: 38px; display: flex; align-items: center;
+      justify-content: center; border-radius: 4px; background: var(--bg3);
+      color: var(--dim); font-size: 10px; flex-shrink: 0; text-transform: uppercase;
+    }
+    .iinfo { flex: 1; min-width: 0; }
+    .iname { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .imeta { font-size: 11px; color: var(--dim); margin-top: 1px; }
+    .istat { font-size: 11px; flex-shrink: 0; color: var(--dim); }
+    .istat.pushing { color: var(--wa); }
+    .istat.done    { color: var(--ok); }
+    .istat.failed  { color: var(--er); }
+    .ibtn {
+      flex-shrink: 0; background: none; border: 1px solid var(--bd);
+      color: var(--dim); border-radius: 4px; padding: 3px 8px;
+      font-size: 11px; font-family: var(--f); cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    .ibtn:hover { border-color: var(--ac); color: var(--ac); }
+    .ibtn:disabled { opacity: .4; cursor: default; }
+
+    /* Log */
+    #log-wrap {
+      background: var(--bg2); border: 1px solid var(--bd);
+      border-radius: var(--r); overflow: hidden; display: none;
+    }
+    .log-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 5px 10px; border-bottom: 1px solid var(--bd);
+      font-size: 11px; color: var(--dim);
+    }
+    #log-body {
+      padding: 6px 10px; max-height: 150px; overflow-y: auto;
+      font-size: 11px; line-height: 1.9;
+      font-family: "SF Mono", "Fira Code", Menlo, monospace;
+    }
+    .le { display: flex; gap: 8px; }
+    .le-t { color: var(--dim); flex-shrink: 0; }
+    .le-m.ok   { color: var(--ok); }
+    .le-m.err  { color: var(--er); }
+    .le-m.inf  { color: var(--dim); }
+
+    /* Settings */
+    .fg { display: flex; flex-direction: column; gap: 5px; margin-bottom: 13px; }
+    .fg label { font-size: 12px; font-weight: 500; }
+    .hint { font-size: 11px; color: var(--dim); }
+    .irow2 { display: flex; gap: 6px; }
+    .irow2 input { flex: 1; }
+    .ck-label { display: flex; align-items: center; gap: 7px; font-weight: 400; cursor: pointer; }
+    .ck-label input { accent-color: var(--ac); width: 13px; height: 13px; }
+
+    /* Inputs */
+    input[type=text], input[type=password] {
+      background: var(--bg2); border: 1px solid var(--bd);
+      border-radius: var(--r); color: var(--tx);
+      font-size: 12px; font-family: var(--f);
+      padding: 7px 10px; outline: none; width: 100%;
+      transition: border-color .15s;
+    }
+    input:focus { border-color: var(--ac); }
+    input::placeholder { color: var(--dim); }
+
+    /* Messages */
+    .msg { padding: 8px 11px; border-radius: var(--r); font-size: 12px; display: none; margin-top: 10px; }
+    .msg.ok  { background: rgba(61,186,116,.12); color: var(--ok);  border: 1px solid rgba(61,186,116,.3); }
+    .msg.er  { background: rgba(224,92,92,.12);  color: var(--er);  border: 1px solid rgba(224,92,92,.3); }
+    .msg.inf { background: rgba(79,142,247,.10); color: var(--ac);  border: 1px solid rgba(79,142,247,.3); }
+
+    /* Buttons */
+    .btn-p {
+      background: var(--ac); color: #fff; border: none;
+      border-radius: var(--r); padding: 7px 13px;
+      font-size: 12px; font-weight: 500; font-family: var(--f);
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      transition: background .15s;
+    }
+    .btn-p:hover    { background: var(--acH); }
+    .btn-p:disabled { opacity: .5; cursor: default; }
+    .btn-s {
+      background: var(--bg3); color: var(--tx);
+      border: 1px solid var(--bd); border-radius: var(--r); padding: 7px 13px;
+      font-size: 12px; font-family: var(--f); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-s:hover    { border-color: var(--ac); color: var(--ac); }
+    .btn-s:disabled { opacity: .5; cursor: default; }
+    .btn-i {
+      background: var(--bg3); color: var(--dim);
+      border: 1px solid var(--bd); border-radius: var(--r); padding: 5px 8px;
+      cursor: pointer; display: inline-flex; align-items: center;
+      transition: border-color .15s, color .15s;
+    }
+    .btn-i:hover { border-color: var(--ac); color: var(--ac); }
+    .btn-t {
+      background: none; border: none; color: var(--dim);
+      font-size: 11px; font-family: var(--f); cursor: pointer; padding: 0;
+    }
+    .btn-t:hover { color: var(--tx); }
+
+    .row-end { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+  </style>
 </head>
 <body>
 
   <!-- Header -->
-  <div class="header">
-    <div class="logo-title">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="opacity:.9">
+  <div id="hdr">
+    <div id="hdr-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
       </svg>
       GitHub Push
     </div>
-    <div class="tabs">
-      <button class="tab active" data-tab="push">推送</button>
-      <button class="tab" data-tab="settings">設定</button>
+    <div id="tabs">
+      <button class="tab on" data-t="push">推送</button>
+      <button class="tab" data-t="settings">設定</button>
     </div>
   </div>
 
-  <!-- ── Push Tab ── -->
-  <div id="tab-push" class="tab-panel">
+  <!-- Push panel -->
+  <div id="panel-push" class="panel on">
 
-    <!-- Empty state -->
-    <div id="no-items" class="empty-state">
+    <div id="no-items">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
         <rect x="3" y="3" width="18" height="18" rx="2"/>
         <circle cx="8.5" cy="8.5" r="1.5"/>
         <polyline points="21 15 16 10 5 21"/>
       </svg>
-      <p>在 Eagle 中選取圖片<br>然後開啟此視窗</p>
-      <button id="btn-refresh" class="btn-secondary">重新整理</button>
+      <p>在 Eagle 中選取圖片<br>然後點下方重新整理</p>
+      <button id="btn-refresh" class="btn-s">重新整理</button>
     </div>
 
-    <!-- Items ready -->
     <div id="items-view" style="display:none">
       <div class="toolbar">
         <span id="item-count" class="dim"></span>
         <div style="display:flex;gap:6px;align-items:center">
-          <button id="btn-refresh-list" class="btn-icon" title="重新整理">
+          <button id="btn-refresh2" class="btn-i" title="重新整理">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
               <polyline points="23 4 23 10 17 10"/>
               <polyline points="1 20 1 14 7 14"/>
               <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
             </svg>
           </button>
-          <button id="btn-push-all" class="btn-primary">
+          <button id="btn-push-all" class="btn-p">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-              <line x1="12" y1="19" x2="12" y2="5"/>
-              <polyline points="5 12 12 5 19 12"/>
+              <line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>
             </svg>
             推送全部
           </button>
         </div>
       </div>
 
-      <input id="commit-message" type="text" placeholder="Commit 訊息（留白自動產生）" style="width:100%;margin-bottom:10px">
+      <input id="commit-msg" type="text" placeholder="Commit 訊息（留白自動產生）" style="margin-bottom:10px">
 
       <div id="items-list"></div>
 
-      <div id="push-log" style="display:none">
-        <div class="log-header">
+      <div id="log-wrap">
+        <div class="log-hdr">
           <span>推送紀錄</span>
-          <button id="btn-clear-log" class="btn-text">清除</button>
+          <button id="btn-clear-log" class="btn-t">清除</button>
         </div>
-        <div id="log-entries"></div>
+        <div id="log-body"></div>
       </div>
     </div>
   </div>
 
-  <!-- ── Settings Tab ── -->
-  <div id="tab-settings" class="tab-panel" style="display:none">
-    <div class="form-group">
-      <label>
-        GitHub Personal Access Token
-        <a class="hint-link" href="#" id="token-help-link">(如何取得？)</a>
-      </label>
-      <div class="input-row">
-        <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
-        <button type="button" id="btn-show-token" class="btn-icon">
+  <!-- Settings panel -->
+  <div id="panel-settings" class="panel">
+
+    <div class="fg">
+      <label>GitHub Personal Access Token</label>
+      <div class="irow2">
+        <input type="password" id="s-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        <button id="btn-eye" class="btn-i">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-            <circle cx="12" cy="12" r="3"/>
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
           </svg>
         </button>
       </div>
       <span class="hint">需要 <code>repo</code> 或 <code>contents:write</code> 權限</span>
     </div>
 
-    <div class="form-group">
+    <div class="fg">
       <label>Repository</label>
-      <input type="text" id="github-repo" placeholder="owner/repo-name">
+      <input type="text" id="s-repo" placeholder="owner/repo-name">
       <span class="hint">例如：<code>lijingchiu/futureskart</code></span>
     </div>
 
-    <div class="form-group">
+    <div class="fg">
       <label>Branch</label>
-      <input type="text" id="github-branch" placeholder="main">
+      <input type="text" id="s-branch" placeholder="main">
     </div>
 
-    <div class="form-group">
+    <div class="fg">
       <label>目標路徑</label>
-      <input type="text" id="github-path" placeholder="images/">
-      <span class="hint">圖片上傳目錄。留白表示 Repo 根目錄</span>
+      <input type="text" id="s-path" placeholder="images/">
+      <span class="hint">圖片上傳資料夾。留白 = Repo 根目錄</span>
     </div>
 
-    <div class="form-group">
-      <label class="row-label">
-        <input type="checkbox" id="use-subfolder">
+    <div class="fg">
+      <label class="ck-label">
+        <input type="checkbox" id="s-sub">
         依 Eagle 資料夾名稱自動建立子目錄
       </label>
     </div>
 
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px">
-      <button id="btn-test" class="btn-secondary">測試連線</button>
-      <button id="btn-save" class="btn-primary">儲存設定</button>
+    <div class="row-end">
+      <button id="btn-test" class="btn-s">測試連線</button>
+      <button id="btn-save" class="btn-p">儲存設定</button>
     </div>
 
-    <div id="settings-msg" class="msg" style="display:none;margin-top:10px"></div>
+    <div id="s-msg" class="msg"></div>
   </div>
 
-  <script src="js/plugin.js"></script>
+  <script>
+  'use strict';
+
+  // ── Settings ─────────────────────────────────────────────────────────────
+  const SK = 'eagle_github_push_v1';
+  const loadCfg = () => { try { return JSON.parse(localStorage.getItem(SK)||'{}'); } catch { return {}; } };
+  const saveCfg = o => localStorage.setItem(SK, JSON.stringify(o));
+
+  // ── GitHub API ────────────────────────────────────────────────────────────
+  async function ghReq(method, path, token, body) {
+    const r = await fetch('https://api.github.com' + path, {
+      method,
+      headers: {
+        Authorization: 'token ' + token,
+        Accept: 'application/vnd.github.v3+json',
+        'User-Agent': 'Eagle-GitHub-Push/1.2',
+        ...(body ? {'Content-Type':'application/json'} : {})
+      },
+      ...(body ? {body: JSON.stringify(body)} : {})
+    });
+    const d = await r.json().catch(()=>({}));
+    return { ok: r.ok, status: r.status, data: d };
+  }
+
+  async function getSha(token, owner, repo, fp, branch) {
+    const enc = fp.split('/').map(encodeURIComponent).join('/');
+    const {ok,data} = await ghReq('GET', `/repos/${owner}/${repo}/contents/${enc}?ref=${branch}`, token);
+    return ok && data.sha ? data.sha : null;
+  }
+
+  async function pushFile(token, owner, repo, branch, fp, b64, msg) {
+    const enc = fp.split('/').map(encodeURIComponent).join('/');
+    const sha = await getSha(token, owner, repo, fp, branch);
+    const body = {message:msg, content:b64, branch};
+    if (sha) body.sha = sha;
+    return ghReq('PUT', `/repos/${owner}/${repo}/contents/${enc}`, token, body);
+  }
+
+  // ── File helpers ──────────────────────────────────────────────────────────
+  function toB64(path) {
+    return require('fs').readFileSync(path).toString('base64');
+  }
+  function exists(path) {
+    try { require('fs').accessSync(path); return true; } catch { return false; }
+  }
+  function fmt(b) {
+    if (!b) return '';
+    if (b < 1024) return b+' B';
+    if (b < 1048576) return (b/1024).toFixed(1)+' KB';
+    return (b/1048576).toFixed(1)+' MB';
+  }
+  function esc(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // ── Log ──────────────────────────────────────────────────────────────────
+  function addLog(msg, type) {
+    const wrap = document.getElementById('log-wrap');
+    wrap.style.display = '';
+    const t = new Date().toLocaleTimeString('zh-TW',{hour12:false});
+    const cls = type==='success'?'ok':type==='error'?'err':'inf';
+    const row = document.createElement('div');
+    row.className = 'le';
+    row.innerHTML = `<span class="le-t">${t}</span><span class="le-m ${cls}">${esc(msg)}</span>`;
+    const lb = document.getElementById('log-body');
+    lb.appendChild(row);
+    lb.scrollTop = lb.scrollHeight;
+  }
+
+  // ── Push tab ──────────────────────────────────────────────────────────────
+  let ITEMS = [];
+
+  async function refresh() {
+    ITEMS = [];
+    const noEl  = document.getElementById('no-items');
+    const ivEl  = document.getElementById('items-view');
+
+    if (typeof eagle === 'undefined') {
+      noEl.style.display = '';
+      ivEl.style.display = 'none';
+      document.querySelector('#no-items p').textContent = 'Eagle API 未就緒，請重新整理';
+      return;
+    }
+
+    let items = [];
+    try { items = await eagle.item.getSelected(); } catch(e) { console.error(e); }
+
+    if (!items || !items.length) {
+      noEl.style.display = '';
+      ivEl.style.display = 'none';
+      return;
+    }
+
+    ITEMS = items;
+    noEl.style.display = 'none';
+    ivEl.style.display = '';
+    document.getElementById('item-count').textContent = '已選取 ' + items.length + ' 個項目';
+
+    const list = document.getElementById('items-list');
+    list.innerHTML = '';
+    items.forEach((item, i) => list.appendChild(makeRow(item, i)));
+  }
+
+  function makeRow(item, idx) {
+    const ext = item.ext || '';
+    const row = document.createElement('div');
+    row.className = 'irow';
+    row.dataset.idx = idx;
+
+    const thumb = item.thumbnailUrl
+      ? `<img class="ithumb" src="${esc(item.thumbnailUrl)}" alt="" onerror="this.className='ithumb-ph';this.textContent='${esc(ext)}';">`
+      : `<div class="ithumb-ph">${esc(ext)}</div>`;
+
+    row.innerHTML = `
+      ${thumb}
+      <div class="iinfo">
+        <div class="iname" title="${esc(item.name)}.${esc(ext)}">${esc(item.name)}.${esc(ext)}</div>
+        <div class="imeta">${esc(fmt(item.fileSize||item.size||0))}</div>
+      </div>
+      <span class="istat" data-stat></span>
+      <button class="ibtn">推送</button>
+    `;
+    row.querySelector('.ibtn').addEventListener('click', () => doPush([{item, idx}]));
+    return row;
+  }
+
+  function setRowState(idx, state) {
+    const row = document.querySelector(`.irow[data-idx="${idx}"]`);
+    if (!row) return;
+    row.className = 'irow ' + state;
+    const stat = row.querySelector('[data-stat]');
+    stat.className = 'istat ' + state;
+    stat.textContent = {pushing:'…', done:'✓', failed:'✗'}[state] || '';
+    const btn = row.querySelector('.ibtn');
+    if (state === 'pushing') { btn.disabled = true; btn.textContent = '…'; }
+    else if (state === 'done') { btn.disabled = true; btn.textContent = '✓'; }
+    else { btn.disabled = false; btn.textContent = '推送'; }
+  }
+
+  function destPath(cfg, item) {
+    const name = `${item.name}.${item.ext||''}`;
+    let base = (cfg.targetPath||'').replace(/\/+$/,'');
+    if (cfg.useSubfolder && item.folderName) base += '/' + item.folderName;
+    return base ? base + '/' + name : name;
+  }
+
+  function commitMsg(items) {
+    const custom = document.getElementById('commit-msg').value.trim();
+    if (custom) return custom;
+    const d = new Date().toISOString().slice(0,10);
+    const names = items.map(i=>`${i.name}.${i.ext}`).join(', ');
+    return names.length > 80
+      ? `Add ${items.length} images via Eagle [${d}]`
+      : `Add ${names} via Eagle [${d}]`;
+  }
+
+  async function doPush(jobs) {
+    const cfg = loadCfg();
+    if (!cfg.token) { addLog('尚未設定 GitHub Token，請到「設定」頁面','error'); switchTab('settings'); return; }
+    if (!cfg.repo||!cfg.repo.includes('/')) { addLog('尚未設定 Repository','error'); switchTab('settings'); return; }
+
+    const [owner, repo] = cfg.repo.split('/');
+    const branch = cfg.branch || 'main';
+    const msg = commitMsg(jobs.map(j=>j.item));
+    const allBtn = document.getElementById('btn-push-all');
+    allBtn.disabled = true;
+
+    for (const {item, idx} of jobs) {
+      setRowState(idx, 'pushing');
+      const fp = item.filePath || item.path;
+      if (!fp || !exists(fp)) { setRowState(idx,'failed'); addLog(`✗ ${item.name}: 找不到本地檔案`,'error'); continue; }
+
+      let b64;
+      try { b64 = toB64(fp); } catch(e) { setRowState(idx,'failed'); addLog(`✗ ${item.name}: 讀取失敗 – ${e.message}`,'error'); continue; }
+
+      const dest = destPath(cfg, item);
+      addLog(`⟳ 上傳 ${item.name}.${item.ext} → ${dest}`,'info');
+
+      try {
+        const {ok, status, data} = await pushFile(cfg.token, owner, repo, branch, dest, b64, msg);
+        if (ok) {
+          setRowState(idx,'done');
+          addLog(`✓ 成功${data.content&&data.content.html_url?' → '+data.content.html_url:''}`,'success');
+        } else {
+          setRowState(idx,'failed');
+          addLog(`✗ ${item.name}: ${data.message||'未知錯誤'} (HTTP ${status})`,'error');
+        }
+      } catch(e) {
+        setRowState(idx,'failed');
+        addLog(`✗ ${item.name}: 網路錯誤 – ${e.message}`,'error');
+      }
+    }
+    allBtn.disabled = false;
+  }
+
+  // ── Settings tab ──────────────────────────────────────────────────────────
+  function initSettings() {
+    const c = loadCfg();
+    if (c.token) document.getElementById('s-token').value = c.token;
+    if (c.repo)  document.getElementById('s-repo').value  = c.repo;
+    document.getElementById('s-branch').value = c.branch || 'main';
+    document.getElementById('s-path').value   = c.targetPath || 'images/';
+    if (c.useSubfolder) document.getElementById('s-sub').checked = true;
+
+    document.getElementById('btn-eye').addEventListener('click', () => {
+      const el = document.getElementById('s-token');
+      el.type = el.type === 'password' ? 'text' : 'password';
+    });
+
+    document.getElementById('btn-save').addEventListener('click', () => {
+      const s = collectCfg();
+      if (!s.token) return showMsg('請填入 GitHub Token', 'er');
+      if (!s.repo.includes('/')) return showMsg('Repository 格式：owner/repo', 'er');
+      saveCfg(s);
+      showMsg('設定已儲存 ✓', 'ok');
+    });
+
+    document.getElementById('btn-test').addEventListener('click', async () => {
+      const s = collectCfg();
+      if (!s.token) return showMsg('請先填入 Token', 'er');
+      if (!s.repo.includes('/')) return showMsg('請先填入 Repository', 'er');
+      const btn = document.getElementById('btn-test');
+      btn.disabled = true; btn.textContent = '測試中…';
+      showMsg('連線中…', 'inf');
+      const [owner, repo] = s.repo.split('/');
+      const {ok, data} = await ghReq('GET', `/repos/${owner}/${repo}`, s.token);
+      btn.disabled = false; btn.textContent = '測試連線';
+      ok ? showMsg(`✓ ${data.full_name}（${data.private?'私有':'公開'}）`, 'ok')
+         : showMsg(`✗ ${data.message||'未知錯誤'} (HTTP ${data.status||''})`, 'er');
+    });
+  }
+
+  function collectCfg() {
+    return {
+      token:       document.getElementById('s-token').value.trim(),
+      repo:        document.getElementById('s-repo').value.trim(),
+      branch:      document.getElementById('s-branch').value.trim() || 'main',
+      targetPath:  document.getElementById('s-path').value.trim(),
+      useSubfolder: document.getElementById('s-sub').checked,
+    };
+  }
+
+  function showMsg(text, type) {
+    const el = document.getElementById('s-msg');
+    el.textContent = text;
+    el.className = 'msg ' + type;
+    el.style.display = '';
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.style.display = 'none'; }, 5000);
+  }
+
+  // ── Tab switching ─────────────────────────────────────────────────────────
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.t === name));
+    document.getElementById('panel-push').classList.toggle('on', name === 'push');
+    document.getElementById('panel-settings').classList.toggle('on', name === 'settings');
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    // Tab clicks
+    document.querySelectorAll('.tab').forEach(t =>
+      t.addEventListener('click', () => switchTab(t.dataset.t))
+    );
+    document.getElementById('btn-refresh').addEventListener('click', refresh);
+    document.getElementById('btn-refresh2').addEventListener('click', refresh);
+    document.getElementById('btn-push-all').addEventListener('click', () => doPush(ITEMS.map((item,idx)=>({item,idx}))));
+    document.getElementById('btn-clear-log').addEventListener('click', () => {
+      document.getElementById('log-body').innerHTML = '';
+      document.getElementById('log-wrap').style.display = 'none';
+    });
+
+    initSettings();
+    refresh();
+
+    // Eagle lifecycle hooks
+    if (typeof eagle !== 'undefined') {
+      try { eagle.onPluginShow(() => refresh()); } catch(e) {}
+    }
+  });
+  </script>
 </body>
 </html>
